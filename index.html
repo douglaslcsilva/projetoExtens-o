@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal educacional sobre queimadas na Mata Atlântica — dados reais do INPE, monitoramento por satélite e práticas sustentáveis.">
+  <meta name="keywords" content="Mata Atlântica, queimadas, INPE, monitoramento satelital, focos de fogo, sustentabilidade, São José dos Campos, Vale do Paraíba">
+  <meta name="author" content="Douglas Daniel Lopes Cardoso da Silva">
+  <title>Mata Atlântica em Alerta — Portal Educacional</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a href="#inicio" class="skip-link">Pular para o conteúdo principal</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner container">
+      <div class="logo-area">
+        <span class="logo-icon" aria-hidden="true">🔥</span>
+        <div>
+          <h1 class="site-title">Mata Atlântica em Alerta</h1>
+          <p class="site-subtitle">Portal Educacional de Monitoramento de Queimadas</p>
+        </div>
+      </div>
+      <nav class="main-nav" role="navigation" aria-label="Menu principal">
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+          <span class="hamburger"></span>
+        </button>
+        <ul class="nav-list">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#mata-atlantica">Mata Atlântica</a></li>
+          <li><a href="#monitoramento">Monitoramento</a></li>
+          <li><a href="#dados">Dados</a></li>
+          <li><a href="#comparativo">Comparativo</a></li>
+          <li><a href="#regiao">Região</a></li>
+          <li><a href="#prevencao">Prevenção</a></li>
+          <li><a href="#participar">Participar</a></li>
+          <li><a href="#impacto">Impacto</a></li>
+          <li><a href="#fontes">Fontes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <h2 id="hero-title" class="hero-title">Nossa Floresta está em Alerta</h2>
+        <p class="hero-text">Dados reais do INPE mostram o impacto das queimadas na Mata Atlântica. Entenda o problema e descubra como você pode ajudar.</p>
+        <div class="hero-stat-grid" aria-label="Dados de destaque">
+          <div class="hero-stat">
+            <span class="hero-stat-value" id="hero-ma-remaining">—</span>
+            <span class="hero-stat-label">Mata Atlântica remanescente</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value" id="hero-people">—</span>
+            <span class="hero-stat-label">da população brasileira vive no bioma</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-value" id="hero-2024-area">—</span>
+            <span class="hero-stat-label">hectares queimados em 2024 (maior volume desde 2019)</span>
+          </div>
+        </div>
+        <p class="hero-source" id="hero-source"></p>
+      </div>
+    </section>
+
+    <section id="mata-atlantica" class="section" aria-labelledby="ma-title">
+      <div class="container">
+        <h2 id="ma-title" class="section-title">Por que a Mata Atlântica importa?</h2>
+        <p class="section-intro">Conhecida como "floresta dos brasileiros", a Mata Atlântica abrange 17 estados e abriga a maior concentração populacional do país.</p>
+        <div class="card-grid">
+          <article class="card" aria-labelledby="card-biodiversity-title">
+            <div class="card-icon" aria-hidden="true">🌿</div>
+            <h3 id="card-biodiversity-title">Biodiversidade Única</h3>
+            <p>Cerca de 700 espécies de árvores, mais de 200 espécies de aves, pelo menos 270 espécies de mamíferos e mais de 1.000 de anfíbios. Muitas encontradas apenas aqui.</p>
+            <p class="card-source">Fonte: SOS Mata Atlântica</p>
+          </article>
+          <article class="card" aria-labelledby="card-people-title">
+            <div class="card-icon" aria-hidden="true">🏙️</div>
+            <h3 id="card-people-title">Casa de 72% dos Brasileiros</h3>
+            <p>Mais de 160 milhões de pessoas vivem neste bioma, concentrando 80% do Produto Interno Bruto (PIB) nacional.</p>
+            <p class="card-source">Fonte: SOS Mata Atlântica</p>
+          </article>
+          <article class="card" aria-labelledby="card-water-title">
+            <div class="card-icon" aria-hidden="true">💧</div>
+            <h3 id="card-water-title">Recursos Hídricos</h3>
+            <p>Ao longo dos seus 8.000 km de rios, a mata fornece água para as grandes cidades e abastece usinas hidrelétricas essenciais para o país.</p>
+            <p class="card-source">Fonte: SOS Mata Atlântica</p>
+          </article>
+          <article class="card" aria-labelledby="card-deficit-title">
+            <div class="card-icon" aria-hidden="true">📉</div>
+            <h3 id="card-deficit-title">Débito Histórico</h3>
+            <p>Apenas 12,4% da cobertura original são florestas em estágio avançado de regeneração. A restauração completa é urgente.</p>
+            <p class="card-source">Fonte: Atlas da Mata Atlântica, 2024-2025</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="monitoramento" class="section section--dark" aria-labelledby="mon-title">
+      <div class="container">
+        <h2 id="mon-title" class="section-title">Como o monitoramento funciona?</h2>
+        <p class="section-intro">O Programa Queimadas do INPE é referência mundial em monitoramento de queimadas por satélite.</p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-number" aria-hidden="true">1</span>
+            <div>
+              <h3>Detectar</h3>
+              <p>Satélites como o <strong>AQUA</strong> e <strong>Terra</strong> (NASA/USGS) monitoram a superfície do Brasil a cada poucas horas, detectando focos de calor com o sensor MODIS.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number" aria-hidden="true">2</span>
+            <div>
+              <h3>Processar</h3>
+              <p>O Programa Queimadas do INPE processa os dados em tempo real, classificando as detecções e gerando alertas automáticos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number" aria-hidden="true">3</span>
+            <div>
+              <h3>Informar</h3>
+              <p>Plataformas como o <a href="https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/" target="_blank" rel="noopener">TerraBrasilis</a> disponibilizam os dados em dashboards públicos para consulta e pesquisa.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-number" aria-hidden="true">4</span>
+            <div>
+              <h3>Entender</h3>
+              <p><strong>Importante:</strong> Um "foco de queimada" é a detecção de fogo ativo dentro de um pixel de ~1km. Ele <em>não</em> representa um incêndio individual ou uma área específica queimada.</p>
+            </div>
+          </div>
+        </div>
+        <div class="alert-box" role="alert">
+          <strong>Fonte oficial:</strong>
+          <span id="monitoramento-source"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="dados" class="section" aria-labelledby="dados-title">
+      <div class="container">
+        <h2 id="dados-title" class="section-title">Dados de Queimadas na Mata Atlântica</h2>
+        <p class="section-intro" id="dados-intro"></p>
+
+        <div class="chart-wrapper">
+          <h3>Focos de Queimada — Série Histórica (Mata Atlântica)</h3>
+          <div class="chart-container" style="position:relative; height:400px;">
+            <canvas id="chart-historical" aria-label="Gráfico de barras mostrando focos de queimada na Mata Atlântica por ano" role="img"></canvas>
+          </div>
+          <p class="chart-note">* Apenas anos com dados verificados em fontes oficiais. Consulte DATA_SOURCES.md para detalhes.</p>
+        </div>
+
+        <div class="stat-cards" aria-label="Estatísticas de destaque">
+          <div class="stat-card stat-card--alert">
+            <span class="stat-card-value" id="stat-june-ma">—</span>
+            <span class="stat-card-label">Focos na Mata Atlântica (jun/2026)</span>
+            <span class="stat-card-detail" id="stat-june-ma-detail"></span>
+          </div>
+          <div class="stat-card stat-card--alert">
+            <span class="stat-card-value" id="stat-june-sp">—</span>
+            <span class="stat-card-label">Focos em São Paulo (jun/2026)</span>
+            <span class="stat-card-detail" id="stat-june-sp-detail"></span>
+          </div>
+          <div class="stat-card stat-card--info">
+            <span class="stat-card-value" id="stat-2024-area">—</span>
+            <span class="stat-card-label">Área queimada na MA (jan-out/2024)</span>
+            <span class="stat-card-detail" id="stat-2024-detail"></span>
+          </div>
+        </div>
+
+        <div class="chart-wrapper">
+          <h3>Desflorestamento na Mata Atlântica — Atlas 2024-2025</h3>
+          <div class="chart-container" style="position:relative; height:350px;">
+            <canvas id="chart-atlas" aria-label="Gráfico de barras mostrando desflorestamento na Mata Atlântica por período" role="img"></canvas>
+          </div>
+          <p class="chart-note">Fonte: Atlas da Mata Atlântica / Inpe / SOS Mata Atlântica. Valores em hectares.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="comparativo" class="section section--dark" aria-labelledby="comp-title">
+      <div class="container">
+        <h2 id="comp-title" class="section-title">Comparativo: 2026 vs Média Histórica</h2>
+        <p class="section-intro" id="comp-intro"></p>
+
+        <div class="chart-wrapper">
+          <h3>Focos Mensais — Brasil (todos os biomas)</h3>
+          <div class="chart-container" style="position:relative; height:400px;">
+            <canvas id="chart-monthly" aria-label="Gráfico de barras comparando focos mensais de 2026 com média histórica" role="img"></canvas>
+          </div>
+          <p class="chart-note" id="comp-source"></p>
+        </div>
+
+        <h3>Comparativo por Bioma — Junho/2026</h3>
+        <div class="chart-wrapper">
+          <div class="chart-container" style="position:relative; height:400px;">
+            <canvas id="chart-bioma" aria-label="Gráfico comparando focos de junho de 2026 com média histórica por bioma" role="img"></canvas>
+          </div>
+          <p class="chart-note">Fonte: Boletim InfoQueima, Vol. 11, Nº 06, junho/2026, INPE</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="regiao" class="section" aria-labelledby="reg-title">
+      <div class="container">
+        <h2 id="reg-title" class="section-title">Foco Regional: São Paulo e Vale do Paraíba</h2>
+        <p class="section-intro">São José dos Campos está no coração do Vale do Paraíba, uma das regiões mais afetadas pelas queimadas na Mata Atlântica paulista.</p>
+
+        <div class="chart-wrapper">
+          <h3>Focos de Queimada — Estado de São Paulo</h3>
+          <div class="chart-container" style="position:relative; height:400px;">
+            <canvas id="chart-saopaulo" aria-label="Gráfico mostrando focos de queimada no estado de São Paulo ao longo dos anos" role="img"></canvas>
+          </div>
+          <p class="chart-note" id="sp-note"></p>
+        </div>
+
+        <div class="alert-box" role="alert">
+          <h3>Por que São Paulo?</h3>
+          <p id="sp-why"></p>
+        </div>
+
+        <div class="chart-wrapper">
+          <h3>Junho/2026 em São Paulo</h3>
+          <div class="chart-container" style="position:relative; height:300px;">
+            <canvas id="chart-sp-june" aria-label="Gráfico comparando junho de 2026 com média histórica em São Paulo" role="img"></canvas>
+          </div>
+          <p class="chart-note" id="sp-june-source"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="prevencao" class="section section--green" aria-labelledby="prev-title">
+      <div class="container">
+        <h2 id="prev-title" class="section-title">Como prevenir queimadas</h2>
+        <p class="section-intro">Ações simples podem reduzir drasticamente o risco de incêndios florestais. Conheça as principais:</p>
+        <div class="card-grid">
+          <article class="card card--white">
+            <div class="card-icon" aria-hidden="true">🚯</div>
+            <h3>Não descarte lixo em áreas verdes</h3>
+            <p>Garrafas de vidro e resíduos orgânicos em areas abertas podem funcionar como lentes de aumento, iniciando focos de incêndio.</p>
+          </article>
+          <article class="card card--white">
+            <div class="card-icon" aria-hidden="true">🔥</div>
+            <h3>Evite queimadas e fogos</h3>
+            <p>Queimadas são a principal causa de incêndios florestais. Mesmo pequenos focos podem se alastrar rapidamente em períodos de seca.</p>
+          </article>
+          <article class="card card--white">
+            <div class="card-icon" aria-hidden="true">🚨</div>
+            <h3>Denuncie</h3>
+            <p>Se você avistar fumaça ou fogo em áreas de vegetação, ligue para o Corpo de Bombeiros (193) ou denuncie ao IBAMA (0800-61-1919).</p>
+          </article>
+          <article class="card card--white">
+            <div class="card-icon" aria-hidden="true">🌱</div>
+            <h3>Apoie a restauração</h3>
+            <p>Participar de mutirões de plantio, apoiar ONGs como a SOS Mata Atlântica e consumir produtos de necklace sazonal são formas de ajudar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="participar" class="section section--cta" aria-labelledby="cta-title">
+      <div class="container">
+        <h2 id="cta-title" class="section-title">Participe da pesquisa</h2>
+        <p class="section-intro">Sua opinião é importante! Preencha nossa pesquisa sobre percepção ambiental e ajude a fortalecer a educação ambiental na região.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZTCjDHHZe6QuzB6OsygMpYzsfBPFZ-gQeCYMoouUuKqiG5Q/viewform?usp=sharing&ouid=115903134200025727500" target="_blank" rel="noopener" class="cta-button" id="cta-form-link">
+          Preencher a pesquisa
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </a>
+        <p class="cta-note">Ou escaneie o QR Code abaixo:</p>
+        <div class="qr-code-wrapper">
+          <div id="qrcode" aria-label="QR Code para acessar a pesquisa online"></div>
+        </div>
+        <p class="cta-small">Projeto de Extensão — Inovação, Ciência e Transformação Digital</p>
+        <p class="cta-student">Douglas Daniel Lopes Cardoso da Silva — Análise e Desenvolvimento de Sistemas</p>
+      </div>
+    </section>
+
+    <section id="impacto" class="section section--dark" aria-labelledby="impacto-title">
+      <div class="container">
+        <h2 id="impacto-title" class="section-title">Impacto desta ação</h2>
+        <div class="impacto-single">
+          <span class="impacto-value" id="counter-responses">--</span>
+          <span class="impacto-label">Participações registradas</span>
+        </div>
+        <p class="impacto-note">Este número representa a quantidade de formulários enviados pelos participantes desta ação de extensão. Nenhum dado pessoal é exibido publicamente.</p>
+      </div>
+    </section>
+
+    <section id="fontes" class="section" aria-labelledby="fontes-title">
+      <div class="container">
+        <h2 id="fontes-title" class="section-title">Fontes e Metodologia</h2>
+        <p class="section-intro">Todos os dados apresentados neste portal são provenientes de fontes oficiais e públicas.</p>
+        <div class="sources-list">
+          <div class="source-item">
+            <h3>INPE — Programa Queimadas</h3>
+            <p>Dados de focos de queimadas via satélite AQUA Tarde (MODIS).</p>
+            <a href="https://data.inpe.br/queimadas/dados-abertos/" target="_blank" rel="noopener" class="source-link">Acessar dados abertos →</a>
+            <a href="https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/" target="_blank" rel="noopener" class="source-link">Estatísticas por estado →</a>
+          </div>
+          <div class="source-item">
+            <h3>INPE — Boletim InfoQueima</h3>
+            <p>Análises mensais comparativas de focos de queimadas por bioma e estado.</p>
+            <a href="https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/" target="_blank" rel="noopener" class="source-link">Acessar boletins →</a>
+          </div>
+          <div class="source-item">
+            <h3>SOS Mata Atlântica</h3>
+            <p>Informações sobre o bioma, área remanescente e iniciativas de restauração.</p>
+            <a href="https://www.sosma.org.br/causas/mata-atlantica" target="_blank" rel="noopener" class="source-link">sosma.org.br/causas/mata-atlantica →</a>
+          </div>
+          <div class="source-item">
+            <h3>Atlas da Mata Atlântica 2024-2025</h3>
+            <p>Dados de desflorestamento e regeneração da Mata Atlântica (Inpe, SOS MA, Fundação SPA, ISPN, ICMBio, SADS/RS).</p>
+            <a href="http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf" target="_blank" rel="noopener" class="source-link">Baixar PDF do Atlas →</a>
+          </div>
+          <div class="source-item">
+            <h3>ISA — Instituto Socioambiental</h3>
+            <p>Análise "Dinâmica do fogo na Mata Atlântica entre 1985 e 2023 e o caso de 2024" (jan/2025), citando MapBiomas Fogo.</p>
+            <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="source-link">socioambiental.org →</a>
+          </div>
+          <div class="source-item">
+            <h3>Documentação completa</h3>
+            <p>Para detalhes completos sobre fontes, filtros e metodologia, consulte o arquivo DATA_SOURCES.md.</p>
+          </div>
+        </div>
+        <p class="sources-update">Última atualização dos dados: 11/08/2026 | Consulta realizada em: 09/09/2026</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p class="footer-text">Portal educacional sem vínculo institucional com o INPE ou SOS Mata Atlântica.</p>
+      <p class="footer-text">Projeto de Extensão — Inovação, Ciência e Transformação Digital</p>
+      <p class="footer-text">Douglas Daniel Lopes Cardoso da Silva — Análise e Desenvolvimento de Sistemas</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
