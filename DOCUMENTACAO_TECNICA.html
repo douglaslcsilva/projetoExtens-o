@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Documentação Técnica — Mata Atlântica em Alerta</title>
+<style>
+  :root {
+    --green-900: #064e3b;
+    --green-700: #047857;
+    --green-600: #059669;
+    --green-500: #10b981;
+    --green-100: #d1fae5;
+    --green-50:  #ecfdf5;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50:  #f8fafc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: var(--slate-700);
+    background: #fff;
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 15mm 17mm;
+  }
+  h1, h2, h3, h4 { color: var(--slate-900); line-height: 1.25; }
+  h1 { font-size: 20pt; margin-bottom: 4pt; }
+  h2 {
+    font-size: 14pt;
+    margin-top: 22pt;
+    margin-bottom: 8pt;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid var(--green-500);
+    color: var(--green-900);
+  }
+  h3 { font-size: 12pt; margin-top: 14pt; margin-bottom: 4pt; color: var(--green-700); }
+  h4 { font-size: 11pt; margin-top: 10pt; margin-bottom: 4pt; }
+  p { margin-bottom: 8pt; }
+  ul, ol { margin: 0 0 8pt 18pt; }
+  li { margin-bottom: 3pt; }
+  a { color: var(--green-700); text-decoration: none; }
+  code, pre {
+    font-family: Consolas, "Cascadia Code", monospace;
+    font-size: 9pt;
+    background: var(--slate-100);
+    border-radius: 3pt;
+    padding: 1pt 4pt;
+  }
+  pre {
+    padding: 8pt;
+    margin: 6pt 0 10pt;
+    border-left: 3px solid var(--green-500);
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8pt 0 12pt;
+    font-size: 9.5pt;
+  }
+  th, td {
+    border: 1px solid var(--slate-200);
+    padding: 5pt 7pt;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--green-50); color: var(--green-900); font-weight: 600; }
+  tr:nth-child(even) td { background: var(--slate-50); }
+  .cover {
+    text-align: center;
+    padding: 40pt 0 25pt;
+    border-bottom: 3px solid var(--green-500);
+    margin-bottom: 20pt;
+  }
+  .cover h1 { font-size: 24pt; }
+  .cover .subtitle { font-size: 13pt; color: var(--green-700); margin-top: 6pt; }
+  .cover .meta { margin-top: 18pt; font-size: 11pt; color: var(--slate-600); }
+  .cover .badge {
+    display: inline-block;
+    background: var(--green-900);
+    color: #fff;
+    padding: 3pt 10pt;
+    border-radius: 12pt;
+    font-size: 9.5pt;
+    margin: 8pt 2pt 0;
+  }
+  .toc { margin: 12pt 0 20pt; }
+  .toc ul { list-style: none; margin-left: 0; }
+  .toc > ul > li { font-weight: 600; margin-bottom: 4pt; }
+  .toc ul ul { margin-left: 16pt; font-weight: 400; }
+  .note {
+    background: #fff7ed;
+    border-left: 4px solid #f59e0b;
+    padding: 8pt 12pt;
+    border-radius: 0 4pt 4pt 0;
+    margin: 8pt 0;
+    font-size: 9.5pt;
+  }
+  .callout {
+    background: var(--green-50);
+    border-left: 4px solid var(--green-500);
+    padding: 8pt 12pt;
+    border-radius: 0 4pt 4pt 0;
+    margin: 8pt 0;
+  }
+  .field-table dt { font-weight: 600; color: var(--green-800); }
+  .pagebreak { page-break-before: always; }
+  .small { font-size: 9pt; color: var(--slate-500); }
+  .text-center { text-align: center; }
+  @media print {
+    .cover { border-bottom-color: var(--green-500); }
+    h2 { page-break-after: avoid; }
+    h3, h4 { page-break-after: avoid; }
+    table, pre, .note, .callout { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Mata Atlântica em Alerta</h1>
+  <p class="subtitle">Documentação Técnica — Portal Educacional de Monitoramento de Queimadas</p>
+  <div>
+    <span class="badge">Projeto de Extensão</span>
+    <span class="badge">Inovação, Ciência e Transformação Digital</span>
+    <span class="badge">Análise e Desenvolvimento de Sistemas</span>
+  </div>
+  <p class="meta">
+    <strong>Autor:</strong> Douglas Daniel Lopes Cardoso da Silva<br>
+    <strong>Data da documentação:</strong> 09/09/2026
+  </p>
+</div>
+
+<h2>Sumário</h2>
+<div class="toc">
+  <ul>
+    <li>1. Visão geral do projeto</li>
+    <li>2. Objetivos e público-alvo</li>
+    <li>3. Cronologia das ações realizadas</li>
+    <li>4. Arquitetura e estrutura de arquivos
+      <ul>
+        <li>4.1 Mapa do projeto</li>
+        <li>4.2 Tecnologias utilizadas</li>
+        <li>4.3 Fluxo geral de execução</li>
+      </ul>
+    </li>
+    <li>5. Documentação — index.html
+      <ul>
+        <li>5.1 Estrutura da página</li>
+        <li>5.2 Seções (seção por seção)</li>
+        <li>5.3 Navegação e âncoras</li>
+      </ul>
+    </li>
+    <li>6. Documentação — css/style.css
+      <ul>
+        <li>6.1 Design system (variáveis CSS)</li>
+        <li>6.2 Responsividade</li>
+        <li>6.3 Acessibilidade visual</li>
+      </ul>
+    </li>
+    <li>7. Documentação — js/data.js
+      <ul>
+        <li>7.1 Objeto FIRE_DATA (campos explicados)</li>
+        <li>7.2 Correspondência com as fontes</li>
+      </ul>
+    </li>
+    <li>8. Documentação — js/main.js
+      <ul>
+        <li>8.1 Funções e responsabilidades</li>
+        <li>8.2 Gráficos Chart.js</li>
+        <li>8.3 Contador de participações (API)</li>
+        <li>8.4 Navegação móvel</li>
+      </ul>
+    </li>
+    <li>9. Documentação — scripts/process_data.py</li>
+    <li>10. Integrações externas
+      <ul>
+        <li>10.1 Google Forms (pesquisa)</li>
+        <li>10.2 Google Apps Script (contador)</li>
+        <li>10.3 QR Code</li>
+        <li>10.4 Chart.js (CDN)</li>
+      </ul>
+    </li>
+    <li>11. Publicação — GitHub Pages</li>
+    <li>12. Metodologia dos dados</li>
+    <li>13. Bibliografia</li>
+    <li>14. Limitações e melhorias futuras</li>
+  </ul>
+</div>
+
+<h2 class="pagebreak">1. Visão geral do projeto</h2>
+<p>
+O <strong>Mata Atlântica em Alerta</strong> é um portal web educacional desenvolvido como parte do
+<em>Projeto de Extensão — Inovação, Ciência e Transformação Digital</em>, do curso de
+<strong>Análise e Desenvolvimento de Sistemas</strong>. O portal apresenta dados reais e verificados
+sobre queimadas na Mata Atlântica, explica como o monitoramento por satélite funciona e incentiva a
+população a adotar práticas preventivas e sustentáveis.
+</p>
+<p>Todos os dados quantitativos são provenientes de fontes oficiais (INPE/Programa Queimadas, SOS Mata
+Atlântica, SEMIL-SP, ISA/IPAM, MapBiomas), sem nenhum número inventado. As referências estão detalhadas
+na bibliografia (seção 13) e no arquivo <code>DATA_SOURCES.md</code>.</p>
+
+<h2>2. Objetivos e público-alvo</h2>
+<h3>Objetivo geral</h3>
+<p>Conscientizar a comunidade sobre a importância da Mata Atlântica e o impacto das queimadas,
+utilizando dados públicos do INPE como base educacional.</p>
+<h3>Objetivos específicos</h3>
+<ul>
+  <li>Apresentar dados oficiais de focos de queimada do bioma, do estado de São Paulo e contextualização nacional.</li>
+  <li>Explicar o funcionamento do programa de monitoramento por satélite do INPE (satélite de referência AQUA Tarde / MODIS).</li>
+  <li>Estimular a participação em uma pesquisa de percepção ambiental via Google Forms, com contador público de participações.</li>
+  <li>Divulgar práticas preventivas de queimadas (não descartar lixo em áreas verdes, denunciar, apoiar restauração etc.).</li>
+  <li>Focar a atenção na região do Vale do Paraíba e São José dos Campos, além do estado de São Paulo e do bioma nacional.</li>
+</ul>
+<h3>Público-alvo</h3>
+<p>Comunidade acadêmica e população em geral da região do Vale do Paraíba (SP), com linguagem acessível,
+leitura estimada de ~5 minutos, layout mobile-first e recursos de acessibilidade.</p>
+
+<h2 class="pagebreak">3. Cronologia das ações realizadas</h2>
+<table>
+  <tr><th>#</th><th>Ação</th><th>Descrição</th></tr>
+  <tr><td>1</td><td>Análise do ambiente</td><td>Verificação do diretório de trabalho (vazio) e definição de escopo tecnológico: HTML5, CSS3 e JavaScript puro, sem frameworks.</td></tr>
+  <tr><td>2</td><td>Pesquisa de dados oficiais</td><td>Consulta ao SOS Mata Atlântica (sosma.org.br) e ao INPE/Programa Queimadas (InfoQueima, TerraBrasilis, dados abertos).</td></tr>
+  <tr><td>3</td><td>Validação de fontes complementares</td><td>SIGAM/SEMIL-SP, Operação SP Sem Fogo, Folha/G1, ISA/IPAM, MapBiomas, OECO — todos citados na bibliografia.</td></tr>
+  <tr><td>4</td><td>Criação da estrutura de pastas</td><td>Diretórios: <code>css/</code>, <code>js/</code>, <code>assets/</code>, <code>data/</code>, <code>scripts/</code>.</td></tr>
+  <tr><td>5</td><td>Desenvolvimento da página (index.html)</td><td>Single-page com 9 seções iniciais e âncoras de navegação.</td></tr>
+  <tr><td>6</td><td>Desenvolvimento dos estilos (style.css)</td><td>Design system com variáveis CSS, mobile-first, acessibilidade.</td></tr>
+  <tr><td>7</td><td>Desenvolvimento da lógica (data.js + main.js)</td><td>Base de dados verificada e 6 gráficos com Chart.js, QR Code, menu móvel.</td></tr>
+  <tr><td>8</td><td>Documentação de fontes (DATA_SOURCES.md)</td><td>Metodologia, URLs, filtros e período de cada dado.</td></tr>
+  <tr><td>9</td><td>Integração do Google Forms</td><td>Substituição do placeholder pelo link real do formulário no botão e no QR Code.</td></tr>
+  <tr><td>10</td><td>Correção de conteúdo</td><td>Ícone do card "Denuncie" (era 报警, passou a 🚨) e texto do card "Apoie a restauração" (produtos locais e sazonais).</td></tr>
+  <tr><td>11</td><td>Implementação do contador de participações</td><td>Integração com API Google Apps Script via JSONP, com exibição de <code>responses</code> e fallback para "<code>--</code>".</td></tr>
+  <tr><td>12</td><td>Diagnóstico de falha na API</td><td>A API retornava 404 por erro de digitação no ID do deployment; corrigido o URL (<code>...Fwd7wWQ</code>).</td></tr>
+  <tr><td>13</td><td>Publicação no GitHub Pages</td><td><code>git init</code>, commit inicial, push para <code>github.com/douglaslcsilva/projetoExtens-o</code>.</td></tr>
+  <tr><td>14</td><td>Criação do .gitignore</td><td>Exclusão de arquivo local temporário (<code>extensao_faculdade_tcctxt.txt</code>).</td></tr>
+  <tr><td>15</td><td>Documentação técnica e bibliografia</td><td>Este documento (Markdown + HTML + PDF).</td></tr>
+</table>
+
+<h2 class="pagebreak">4. Arquitetura e estrutura de arquivos</h2>
+<h3>4.1 Mapa do projeto</h3>
+<pre>
+projetoExtens-o/
+├── index.html                 → Página principal (single-page)
+├── css/
+│   └── style.css              → Estilos, responsividade e acessibilidade
+├── js/
+│   ├── data.js                → Objeto global FIRE_DATA (dados verificados)
+│   └── main.js                → Lógica, gráficos, contador, navegação
+├── assets/
+│   ├── images/                → Imagens estáticas do projeto
+│   └── terrabrasilis/         → Capturas/screenshots de referência
+├── data/
+│   └── fires_processed.json   → Saída do processamento (gerado por scripts/)
+├── scripts/
+│   └── process_data.py        → Download e processamento de CSVs do INPE
+├── DATA_SOURCES.md            → Fontes, metodologia e filtros
+├── DOCUMENTACAO_TECNICA.md    → Esta documentação (Markdown)
+├── DOCUMENTACAO_TECNICA.html  → Esta documentação (HTML/PDF)
+├── README.md                  → Guia geral do projeto
+└── .gitignore                 → Arquivos excluídos do versionamento
+</pre>
+
+<h3>4.2 Tecnologias utilizadas</h3>
+<table>
+  <tr><th>Tecnologia</th><th>Uso</th></tr>
+  <tr><td>HTML5</td><td>Estrutura semântica da página única (<code>header</code>, <code>main</code>, <code>section</code>, <code>footer</code>).</td></tr>
+  <tr><td>CSS3</td><td>Estilo, design system (variáveis), Flexbox/Grid, media queries.</td></tr>
+  <tr><td>JavaScript Vanilla</td><td>Lógica do portal, sem frameworks (IIFE + <code>use strict</code>).</td></tr>
+  <tr><td>Chart.js 4.4.7 (CDN)</td><td>6 gráficos de barras interativos.</td></tr>
+  <tr><td>qrcodejs 1.0.0 (CDN)</td><td>Geração do QR Code do formulário.</td></tr>
+  <tr><td>Google Apps Script</td><td>API <code>action=stats</code> para expor o número de participações.</td></tr>
+  <tr><td>Google Forms</td><td>Pesquisa de percepção ambiental (coleta de respostas).</td></tr>
+  <tr><td>Git / GitHub Pages</td><td>Versionamento e hospedagem estática.</td></tr>
+</table>
+
+<h3>4.3 Fluxo geral de execução</h3>
+<ol>
+  <li><code>index.html</code> carrega <code>css/style.css</code> no <code>&lt;head&gt;</code>.</li>
+  <li>No fim do <code>&lt;body&gt;</code>, carrega na ordem: <code>data.js</code> → Chart.js (CDN) → qrcodejs (CDN) → <code>main.js</code>.</li>
+  <li><code>main.js</code> aguarda <code>DOMContentLoaded</code> e executa <code>init()</code>, que dispara as rotinas de renderização.</li>
+  <li>Cada rotina lê o objeto global <code>FIRE_DATA</code> (definido por <code>data.js</code>) e atualiza textos, cartões e gráficos da página.</li>
+  <li>Ao carregar, também é consultada a API do contador via JSONP para exibir o total de participações registradas.</li>
+</ol>
+
+<h2 class="pagebreak">5. Documentação — index.html</h2>
+<h3>5.1 Estrutura da página</h3>
+<ul>
+  <li><strong>&lt;head&gt;</strong>: charset UTF-8, viewport responsivo, meta description/keywords, autor, título e folha de estilo.</li>
+  <li><strong>skip-link</strong>: link de acessibilidade "Pular para o conteúdo principal" (visível ao focar).</li>
+  <li><strong>&lt;header class="site-header"&gt;</strong>: logotipo, título e menu de navegação (ancorado, com botão hambúrguer no mobile).</li>
+  <li><strong>&lt;main id="inicio"&gt;</strong>: 10 seções (hero + 9 âncoras).</li>
+  <li><strong>&lt;footer class="site-footer"&gt;</strong>: créditos e identificação do autor/curso.</li>
+</ul>
+
+<h3>5.2 Seções (id → conteúdo)</h3>
+<table>
+  <tr><th>Seção (id)</th><th>Título</th><th>Conteúdo principal</th></tr>
+  <tr><td><code>inicio</code> / .hero</td><td>Nossa Floresta está em Alerta</td><td>Três estatísticas de destaque preenchidas via JS (<code>hero-*</code>).</td></tr>
+  <tr><td><code>mata-atlantica</code></td><td>Por que a Mata Atlântica importa?</td><td>4 cartões: biodiversidade, população, recursos hídricos e débito histórico.</td></tr>
+  <tr><td><code>monitoramento</code></td><td>Como o monitoramento funciona?</td><td>4 etapas (Detectar, Processar, Informar, Entender) e caixa de nota metodológica.</td></tr>
+  <tr><td><code>dados</code></td><td>Dados de Queimadas na Mata Atlântica</td><td>Gráfico histórico, 3 cartões de estatísticas e gráfico do Atlas.</td></tr>
+  <tr><td><code>comparativo</code></td><td>Comparativo: 2026 vs Média Histórica</td><td>Gráfico mensal nacional e gráfico por bioma (jun/2026).</td></tr>
+  <tr><td><code>regiao</code></td><td>Foco Regional: São Paulo e Vale do Paraíba</td><td>Gráfico do estado de SP, justificativa regional e gráfico jun/2026 de SP.</td></tr>
+  <tr><td><code>prevencao</code></td><td>Como prevenir queimadas</td><td>4 cartões de dicas preventivas.</td></tr>
+  <tr><td><code>participar</code></td><td>Participe da pesquisa</td><td>Botão CTA, QR Code gerado por JS e créditos do projeto.</td></tr>
+  <tr><td><code>impacto</code></td><td>Impacto desta ação</td><td>Card único com o número de participações registradas (API).</td></tr>
+  <tr><td><code>fontes</code></td><td>Fontes e Metodologia</td><td>Lista de fontes oficiais com links e data de atualização.</td></tr>
+</table>
+
+<h3>5.3 Navegação e âncoras</h3>
+<p>O menu usa links de âncora (<code>#inicio</code>, <code>#mata-atlantica</code>, …, <code>#fontes</code>).
+O CSS aplica <code>scroll-behavior: smooth</code> e <code>scroll-padding-top: 5rem</code> para compensar o
+header fixo. No mobile, o botão <code>.nav-toggle</code> abre/ fecha um painel lateral com overlay.</p>
+
+<h2 class="pagebreak">6. Documentação — css/style.css</h2>
+<h3>6.1 Design system (variáveis CSS)</h3>
+<p>O arquivo declarado com <code>:root</code> centraliza cores, tipografia, espaçamentos, raios de borda e
+sombras em variáveis (<code>--c-green-*</code>, <code>--c-slate-*</code>, <code>--fs-*</code>,
+<code>--space-*</code>, <code>--radius-*</code>, <code>--shadow-*</code> etc.).</p>
+<table>
+  <tr><th>Grupo</th><th>Exemplos</th><th>Finalidade</th></tr>
+  <tr><td>Verdes</td><td><code>--c-green-900…#50</code></td><td>Identidade visual do bioma e do projeto.</td></tr>
+  <tr><td>Cinzas</td><td><code>--c-slate-900…#50</code></td><td>Textos, bordas e fundos neutros.</td></tr>
+  <tr><td>Destaques</td><td><code>--c-red-500</code>, <code>--c-amber-500</code></td><td>Alertas, recordes e avisos.</td></tr>
+  <tr><td>Tipografia</td><td><code>--fs-xs … --fs-5xl</code>, <code>--fw-normal…800</code></td><td>Escala tipográfica e pesos.</td></tr>
+  <tr><td>Espaçamento</td><td><code>--space-1 … --space-24</code></td><td>Margin/padding consistentes.</td></tr>
+  <tr><td>Raio/Sombra</td><td><code>--radius-*</code>, <code>--shadow-*</code></td><td>Cardes com acabamento padronizado.</td></tr>
+  <tr><td>Transição</td><td><code>--transition-fast/base/slow</code></td><td>Animações suaves de hover/foco.</td></tr>
+</table>
+
+<h3>6.2 Responsividade</h3>
+<ul>
+  <li><strong>Mobile-first:</strong> layout em coluna única por padrão.</li>
+  <li><strong>@media (min-width: 640px)</strong>: hero-stat-grid, card-grid e stat-cards passam a múltiplas colunas.</li>
+  <li><strong>@media (min-width: 1024px)</strong>: 4 colunas nos cards, título maior e steps em 2 colunas.</li>
+  <li><strong>@media (max-width: 1023px)</strong>: menu vira painel lateral deslizante (<code>.nav-list.open</code> + overlay).</li>
+  <li><strong>@media (max-width: 480px)</strong>: contador "Impacto" centralizado com fonte ajustada.</li>
+</ul>
+
+<h3>6.3 Acessibilidade visual</h3>
+<ul>
+  <li>Link de navegação por teclado <code>.skip-link</code>.</li>
+  <li>Foco visível padrão (<code>:focus-visible</code>) e contraste de textos.</li>
+  <li><code>@media (prefers-reduced-motion: reduce)</code> desativa animações.</li>
+  <li>Estilos de impressão (<code>@media print</code>) ocultam menu, botões e gráficos.</li>
+  <li>Classe utilitária <code>.sr-only</code> para textos acessíveis a leitores de tela.</li>
+</ul>
+
+<h2 class="pagebreak">7. Documentação — js/data.js</h2>
+<p>O arquivo define uma única constante global <code>FIRE_DATA</code> com todos os dados verificados.
+Note que <code>data.js</code> é carregado antes de <code>main.js</code>, garantindo que o objeto exista no momento do uso.</p>
+
+<h3>7.1 Objeto FIRE_DATA (campos explicados)</h3>
+<table>
+  <tr><th>Campo</th><th>Tipo</th><th>Descrição</th></tr>
+  <tr><td><code>metadata</code></td><td>objeto</td><td>Metadados gerais: escopo, satélite de referência (AQUA Tarde/MODIS), última atualização, período, fonte e nota metodológica.</td></tr>
+  <tr><td><code>mataAtlantica</code></td><td>objeto</td><td>Fatos do bioma: área original (131.007.456 ha), % remanescente (24), % florestas maduras (12,4), nº de estados (17), % população (72) e % PIB (80).</td></tr>
+  <tr><td><code>historical</code></td><td>array</td><td>Série anual de focos do bioma: <code>year</code>, <code>count</code> (ou <code>null</code> quando não verificado) e <code>note</code>. Anos marcados com <code>partial: true</code> são parciais.</td></tr>
+  <tr><td><code>juneData2026</code></td><td>objeto</td><td>Dados de jun/2026 do bioma: focos <code>fires2026</code> (428), <code>historicalAverage</code> (711), variações e interpretação.</td></tr>
+  <tr><td><code>saoPaulo</code></td><td>objeto</td><td>Dados estaduais: <code>scope</code>, <code>note</code>, array <code>records</code> (ano, nº de focos e fonte) e <code>june2026</code>.</td></tr>
+  <tr><td><code>monthlyComparison</code></td><td>objeto</td><td>Comparativo mensal nacional: <code>avg</code> (média histórica), <code>y2026</code> e <code>diff2026</code> por mês.</td></tr>
+  <tr><td><code>biomaComparison</code></td><td>array</td><td>Focos por bioma em jun/2026 vs média histórica (<code>name</code>, <code>fires2026</code>, <code>avg</code>, <code>fires2025</code>).</td></tr>
+  <tr><td><code>finding2024</code></td><td>objeto</td><td>Hall principal de 2024: 993.117 ha queimados (jan–out), +636% vs 2023, estado mais afetado e causa principal.</td></tr>
+  <tr><td><code>atlasDeforestation</code></td><td>array</td><td>Série de desflorestamento do Atlas 2017–2025 (<code>period</code>, <code>hectares</code>, <code>note</code>).</td></tr>
+</table>
+
+<h3>7.2 Correspondência com as fontes</h3>
+<p>Valores nulos (<code>null</code>) indicam anos em que a pesquisa não encontrou valor oficial verificável;
+o gráfico os exibe como "Sem dados verificados". A série anual completa pode ser obtida rodando
+<code>scripts/process_data.py</code> em ambiente com Python (baixa os CSVs do INPE e consolida em
+<code>data/fires_processed.json</code>). A correspondência detalhada de cada valor com sua fonte está no
+arquivo <code>DATA_SOURCES.md</code>.</p>
+
+<h2 class="pagebreak">8. Documentação — js/main.js</h2>
+<p>Todo o código está envolto em uma <strong>IIFE</strong> (<code>(function(){…})()</code>) com modo estrito
+(<code>"use strict"</code>), evitando poluir o escopo global. Configurações centrais ficam em variáveis no topo:</p>
+<ul>
+  <li><code>GOOGLE_FORMS_URL</code>: URL real do Google Forms (usada no botão e no QR Code).</li>
+  <li><code>COUNTER_API</code>: endereço base da API Google Apps Script (JSONP).</li>
+</ul>
+
+<h3>8.1 Funções e responsabilidades</h3>
+<table>
+  <tr><th>Função</th><th>Responsabilidade</th></tr>
+  <tr><td><code>init()</code></td><td>Orquestra todas as renderizações após o DOM carregar.</td></tr>
+  <tr><td><code>renderHeroStats()</code></td><td>Preenche os 3 números do destaque inicial e a fonte.</td></tr>
+  <tr><td><code>renderMonitoramentoSource()</code></td><td>Insere a nota metodológica oficial do INPE na seção monitoramento.</td></tr>
+  <tr><td><code>renderDados()</code></td><td>Preenche introdução, cartões de estatísticas e dispara os 2 gráficos da seção.</td></tr>
+  <tr><td><code>renderHistoricalChart()</code></td><td>Gráfico de barras da série histórica anual do bioma.</td></tr>
+  <tr><td><code>renderAtlasChart()</code></td><td>Gráfico de barras do desflorestamento (Atlas).</td></tr>
+  <tr><td><code>renderComparativo()</code></td><td>Preenche introdução/fonte e dispara os 2 gráficos comparativos.</td></tr>
+  <tr><td><code>renderMonthlyChart()</code></td><td>Gráfico mensal Brasil: média histórica vs 2026.</td></tr>
+  <tr><td><code>renderBiomaChart()</code></td><td>Gráfico horizontal por bioma (jun/2026 vs média).</td></tr>
+  <tr><td><code>renderRegiao()</code></td><td>Preenche textos regionais e dispara os 2 gráficos de SP.</td></tr>
+  <tr><td><code>renderSPChart()</code></td><td>Gráfico de barras dos focos em SP por ano.</td></tr>
+  <tr><td><code>renderSPJuneChart()</code></td><td>Gráfico comparativo jun/2026 vs média histórica em SP.</td></tr>
+  <tr><td><code>renderPrevencao()</code></td><td>Conteúdo estático — mantida para consistência do fluxo.</td></tr>
+  <tr><td><code>renderParticipar()</code></td><td>Aplica URL do Forms no botão e gera o QR Code.</td></tr>
+  <tr><td><code>setupImpacto()</code></td><td>Consulta a API de participações ao carregar (uma única chamada).</td></tr>
+  <tr><td><code>jsonpRequest(url)</code></td><td>Faz requisição JSONP (cria tag <code>&lt;script&gt;</code> dinâmica) com timeout de 10s.</td></tr>
+  <tr><td><code>window.__counterCallback(data)</code></td><td>Recebe a resposta da API e atualiza o contador de respostas.</td></tr>
+  <tr><td><code>animateCounter(id, valor)</code></td><td>Anima o número de 0 até o valor final (easing cúbico, 1,2 s).</td></tr>
+  <tr><td><code>setupMobileNav()</code></td><td>Menu hambúrguer + overlay; fecha ao clicar link ou ESC.</td></tr>
+  <tr><td><code>setupActiveNav()</code></td><td>Destaca o item de menu correspondente à seção visível (IntersectionObserver).</td></tr>
+  <tr><td><code>setSafe(id, texto)</code></td><td>Helper que só atualiza o elemento se ele existir.</td></tr>
+  <tr><td><code>formatNumber(n)</code></td><td>Formata número no estilo pt-BR ("1.234"), ou "—" se nulo.</td></tr>
+  <tr><td><code>formatPercent(p)</code></td><td>Formata porcentagem pt-BR com sinal.</td></tr>
+</table>
+
+<h3>8.2 Gráficos Chart.js</h3>
+<ul>
+  <li><strong>chart-historical</strong>: barras; cor por faixa (cinza = sem dado, âmbar = parcial, vermelho = grande). Tooltip mostra nota da fonte.</li>
+  <li><strong>chart-atlas</strong>: barras; verdes para baixos valores, âmbar/vermelho para os maiores.</li>
+  <li><strong>chart-monthly</strong>: 2 datasets (média histórica vs 2026); barra de 2026 fica verde quando abaixo da média, vermelha quando acima.</li>
+  <li><strong>chart-bioma</strong>: horizontal (<code>indexAxis: "y"</code>), comparando mês jun/2026 vs média por bioma.</li>
+  <li><strong>chart-saopaulo</strong>: barras anuais de SP com tooltip da fonte de cada ano.</li>
+  <li><strong>chart-sp-june</strong>: 2 barras (média histórica vs jun/2026).</li>
+</ul>
+
+<h3>8.3 Contador de participações (API)</h3>
+<p><code>setupImpacto()</code> chama <code>COUNTER_API + "?action=stats&callback=__counterCallback"</code>.
+A resposta tem formato <code>{visits, responses, updatedAt}</code>; o valor exibido é somente
+<code>responses</code>. O JSONP evita problemas de CORS (o Google Apps Script responde sabendo o parâmetro
+<code>callback</code>). Caso a chamada falhe ou o script não carregue, o elemento mantém o valor padrão
+"<code>--</code>" e nenhum erro é exibido ao visitante — garantindo que o site nunca quebre por indisponibilidade da API.</p>
+
+<h3>8.4 Navegação móvel</h3>
+<p><code>setupMobileNav()</code> cria dinamicamente um overlay, controla <code>aria-expanded</code>, bloqueia o
+scroll do corpo com o menu aberto e fecha via clique no overlay, no link ou tecla ESC.</p>
+
+<h2 class="pagebreak">9. Documentação — scripts/process_data.py</h2>
+<p>Script padrão (stdlib) para reprocessar os CSVs oficiais do INPE quando se deseja a série completa:</p>
+<ul>
+  <li>Baixa arquivos <code>focos_mensal_br_YYYYMM.csv</code> de <code>dataserver-coids.inpe.br</code> (2010 a 8/2026).</li>
+  <li>Filtra ocorrências cujo campo <code>bioma</code> contenha "Mata Atlântica".</li>
+  <li>Separa também as ocorrências do estado de São Paulo dentro do bioma.</li>
+  <li>Agrega por ano e por mês e grava <code>data/fires_processed.json</code> com os totais.</li>
+  <li>Lida com falhas de download por mês (avisa e segue).</li>
+</ul>
+<div class="note"><strong>Observação:</strong> os CSVs brutos incluem TODOS os satélites; os valores resultantes
+podem diferir dos exibidos no portal, que usa somente o satélite de referência (AQUA Tarde).</div>
+
+<h2 class="pagebreak">10. Integrações externas</h2>
+<h3>10.1 Google Forms (pesquisa)</h3>
+<p>O botão "Preencher a pesquisa" e o QR Code apontam para o formulário:
+<code>https://docs.google.com/forms/d/e/1FAIpQLSdZTCjDHHZe6QuzB6OsygMpYzsfBPFZ-gQeCYMoouUuKqiG5Q/viewform</code>.</p>
+<p>As respostas alimentam a mesma planilha vinculada ao formulário e o Apps Script calcula o total.</p>
+
+<h3>10.2 Google Apps Script (contador)</h3>
+<p>Endpoint: <code>https://script.google.com/macros/s/AKfycbzAYitvMzctgxXXgfMbyGWJb3ZhQTx4DVrVhuru246rD3j4DXF7nZ8wYKFagNZFwd7wWQ/exec?action=stats</code></p>
+<p>A API expõe somente dados agregados (<code>visits</code>, <code>responses</code>, <code>updatedAt</code>) — <strong>nenhum dado pessoal</strong>.
+O portal usa apenas <code>responses</code>, dispensando o registro de visitas e o uso de <code>localStorage</code>.</p>
+<table>
+  <tr><th>Campo</th><th>Uso no portal</th></tr>
+  <tr><td><code>visits</code></td><td>Ignorado (contador de acessos removido).</td></tr>
+  <tr><td><code>responses</code></td><td>Exibido em "#impacto" (Participações registradas).</td></tr>
+  <tr><td><code>updatedAt</code></td><td>Ignorado na interface.</td></tr>
+</table>
+
+<h3>10.3 QR Code</h3>
+<p>A biblioteca <code>qrcodejs</code> (CDN) gera o QR Code em <code>#qrcode</code> com cor verde do tema,
+apontando para o formulário. O QR é gerado apenas se a biblioteca estiver disponível.</p>
+
+<h3>10.4 Chart.js (CDN)</h3>
+<p>Usado via <code>cdn.jsdelivr.net/npm/chart.js@4.4.7</code>. Opções configuradas: <code>responsive</code>,
+<code>maintainAspectRatio: false</code>, tooltips personalizados em pt-BR e escalas com títulos.</p>
+
+<h2 class="pagebreak">11. Publicação — GitHub Pages</h2>
+<pre>
+git init
+git add .
+git commit -m "Mata Atlântica em Alerta - primeiro commit"
+git remote add origin https://github.com/douglaslcsilva/projetoExtens-o.git
+git branch -M main
+git push -u origin main
+</pre>
+<ol>
+  <li>No GitHub: <strong>Settings → Pages</strong> → Source: <em>Deploy from a branch</em> → <code>main</code> / <code>/ (root)</code> → Save.</li>
+  <li>URL pública: <code>https://douglaslcsilva.github.io/projetoExtens-o/</code>.</li>
+  <li>O projeto é 100% estático, então JSONP, Chart.js e QR Code funcionam sem CORS na hospedagem.</li>
+  <li>Atualizações futuras: <code>git add .</code> → <code>git commit -m "descrição"</code> → <code>git push</code> (deploy automático).</li>
+</ol>
+
+<h2 class="pagebreak">12. Metodologia dos dados</h2>
+<ul>
+  <li><strong>Satélite de referência:</strong> AQUA Tarde (sensor MODIS, pixel ~1 km), padrão do Programa Queimadas para consistência histórica.</li>
+  <li><strong>Definição de "foco":</strong> detecção de fogo ativo dentro de um pixel; <strong>não representa</strong> incêndio individual nem área queimada.</li>
+  <li><strong>Escopo:</strong> bioma Mata Atlântica (17 estados da Lei 11.428/2006); recortes complementares para o estado de SP.</li>
+  <li><strong>Recorte temporal:</strong> 2010 a 2026 (parcial até 11/08/2026). Anos com dado verificável têm valor; os demais ficam <code>null</code>.</li>
+  <li><strong>Comparação equivalente:</strong> como 2026 é parcial, comparações usam períodos equivalentes (ex.: jun/2026 vs jun/histórico), evitando distorções.</li>
+  <li><strong>Nada inventado:</strong> todo número tem fonte, URL e data de consulta registrados em <code>DATA_SOURCES.md</code>.</li>
+</ul>
+
+<h2 class="pagebreak">13. Bibliografia</h2>
+<h3>Fontes primárias (dados quantitativos)</h3>
+<ol>
+  <li>INPE — Instituto Nacional de Pesquisas Espaciais. <em>Programa Queimadas — Dados Abertos</em>. Disponível em: &lt;https://data.inpe.br/queimadas/dados-abertos/&gt;. Acesso em: 09 set. 2026.</li>
+  <li>INPE — Programa Queimadas. <em>TerraBrasilis — Estatísticas por estado</em>. Disponível em: &lt;https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/&gt;. Acesso em: 09 set. 2026.</li>
+  <li>INPE — Programa Queimadas. <em>Boletim InfoQueima, Vol. 11, Nº 06, junho/2026</em>. Disponível em: &lt;https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf&gt;. Acesso em: 09 set. 2026.</li>
+  <li>SOS MATA ATLÂNTICA. <em>Mata Atlântica — Causas e importância</em>. Disponível em: &lt;https://www.sosma.org.br/causas/mata-atlantica&gt;. Acesso em: 09 set. 2026.</li>
+  <li>SOS MATA ATLÂNTICA; INPE; FUNDAÇÃO SPA; ISPN; ICMBio; SADS/RS. <em>Atlas da Mata Atlântica 2024-2025</em>. Disponível em: &lt;http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf&gt;. Acesso em: 09 set. 2026.</li>
+  <li>SEMIL/SP — Secretaria de Meio Ambiente, Infraestrutura e Logística. <em>Incêndios florestais no estado de São Paulo (jan–jul 2024)</em>. Disponível em: &lt;https://sigam.ambiente.sp.gov.br/sigam3/Repositorio/472/Documentos/IncendiosFlorestais01Jan31Jul2024.pdf&gt;. Acesso em: 09 set. 2026.</li>
+  <li>SEMIL/SP — Corpo de Bombeiros. <em>Balanço Operação SP Sem Fogo 2023</em>. Disponível em: &lt;https://smastr16.blob.core.windows.net/2001/2023/12/Operacao-SP-Sem-Fogo-2023_Balanco_2023_Site.pdf&gt;. Acesso em: 09 set. 2026.</li>
+  <li>G1 / SETOR3. <em>Agosto e setembro de 2024 são meses com mais registros de focos de incêndio em SP desde 1998</em>. 30 set. 2024. Disponível em: &lt;https://g1.globo.com/sp/sao-paulo/noticia/2024/09/30/agosto-e-setembro-de-2024-sao-meses-com-mais-registros-de-focos-de-incendio-em-sp-desde-1998.ghtml&gt;. Acesso em: 09 set. 2026.</li>
+  <li>ISA — Instituto Socioambiental. <em>Dinâmica do fogo na Mata Atlântica entre 1985 e 2023 e o caso de 2024</em>. São Paulo, jan. 2025. Disponível em: &lt;https://www.socioambiental.org&gt;. Acesso em: 09 set. 2026.</li>
+  <li>IPAM; ISA; SOS MATA ATLÂNTICA. <em>Análise "Dinâmica do fogo…" citando Monitor do Fogo/MapBiomas</em>. Disponível em: &lt;https://mapbiomas.org&gt;. Acesso em: 09 set. 2026.</li>
+  <li>MAPBIOMAS FIRES. <em>Fact Sheet Coleção 3</em>. Jun. 2024. Disponível em: &lt;https://mapbiomas.org/produtos&gt;. Acesso em: 09 set. 2026.</li>
+  <li>OECO — Observatório Eco. <em>Focos de queimadas na Mata Atlântica superam em 13% índices do ano passado</em>. 2020. Disponível em: &lt;https://oeco.org.br/reportagens/focos-de-queimadas-na-mata-atlantica-superam-em-13-indices-do-ano-passado/&gt;. Acesso em: 09 set. 2026.</li>
+  <li>FOLHA DE S.PAULO. <em>Reportagem sobre recorde de focos em SP (2010/2024)</em> (dados do INPE/BDQueimadas). Acesso em: 09 set. 2026.</li>
+  <li>Dissertação UFV (Banco de Dados de Queimadas/BDQueimadas) — série 2016 da Mata Atlântica.</li>
+</ol>
+
+<h3>Referências técnicas (bibliotecas e padrões)</h3>
+<ol>
+  <li>CHART.JS. <em>Documentação oficial — v4</em>. Disponível em: &lt;https://www.chartjs.org/docs/latest/&gt;. Acesso em: 09 set. 2026.</li>
+  <li>QRCODEJS. <em>QR Code generator para JavaScript</em>. Disponível em: &lt;https://github.com/davidshimjs/qrcodejs&gt;. Acesso em: 09 set. 2026.</li>
+  <li>GOOGLE FORMS / GOOGLE APPS SCRIPT. <em>Documentação de web apps (doGet, ContentService, JSONP)</em>. Disponível em: &lt;https://developers.google.com/apps-script&gt;. Acesso em: 09 set. 2026.</li>
+  <li>GITHUB PAGES. <em>Documentação de publicação sites estáticos</em>. Disponível em: &lt;https://docs.github.com/pages&gt;. Acesso em: 09 set. 2026.</li>
+  <li>MOZILLA DEVELOPER NETWORK (MDN). <em>HTML, CSS e JavaScript — referência</em>. Disponível em: &lt;https://developer.mozilla.org&gt;. Acesso em: 09 set. 2026.</li>
+  <li>W3C. <em>WCAG 2.1 — Diretrizes de Acessibilidade para Conteúdo Web</em>. Disponível em: &lt;https://www.w3.org/TR/WCAG21/&gt;. Acesso em: 09 set. 2026.</li>
+</ol>
+
+<h2 class="pagebreak">14. Limitações e melhorias futuras</h2>
+<h3>Limitações</h3>
+<ul>
+  <li>A série anual completa do bioma (2010–2026) tem lacunas em <code>data.js</code>; preenchimento requer rodar <code>scripts/process_data.py</code>.</li>
+  <li>Dados estaduais de SP incluem todos os biomas do estado (não apenas a Mata Atlântica) — identificado na interface.</li>
+  <li>Não há dados com granularidade municipal (São José dos Campos) com validação confiável na pesquisa realizada.</li>
+  <li>Nenhum dado pessoal é coletado; o contador exibe apenas o total agregado de respostas.</li>
+</ul>
+<h3>Melhorias futuras sugeridas</h3>
+<ul>
+  <li>Processar os CSVs do INPE para completar a série histórica (automatizar com <code>process_data.py</code>).</li>
+  <li>Adicionar camada de mapa interativo com os focos do Vale do Paraíba.</li>
+  <li>Automatizar a atualização dos dados por <em>workflow</em> (ex.: GitHub Actions).</li>
+  <li>Substituir o QR Code estático por componente que rastreie a origem (QR vs link).</li>
+  <li>Incluir relatório de acessos sem dados pessoais (análise agregada anônima) quando desejado.</li>
+</ul>
+
+<p class="small text-center" style="margin-top: 24pt;">
+  Documento gerado em 09/09/2026 — Mata Atlântica em Alerta · Projeto de Extensão · Análise e Desenvolvimento de Sistemas
+</p>
+
+</body>
+</html>
