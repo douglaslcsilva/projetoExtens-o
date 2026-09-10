@@ -30,6 +30,7 @@
     setupImpacto();
     setupMobileNav();
     setupActiveNav();
+    initSiglaTooltips();
   }
 
   /* ==========================================================================
@@ -853,6 +854,102 @@
     if (pct === null || pct === undefined) return "—";
     var prefix = pct > 0 ? "+" : "";
     return prefix + pct.toFixed(1).replace(".", ",") + "%";
+  }
+
+  /* ==========================================================================
+     15. Tooltip de siglas (acessível)
+     ========================================================================== */
+
+  function initSiglaTooltips() {
+    var tooltip = document.createElement("div");
+    tooltip.id = "sigla-tooltip";
+    tooltip.className = "sigla-tooltip";
+    tooltip.setAttribute("role", "tooltip");
+    tooltip.setAttribute("aria-hidden", "true");
+    document.body.appendChild(tooltip);
+
+    var shown = null;
+
+    function positionTooltip(el) {
+      var rect = el.getBoundingClientRect();
+      var pad = 8;
+      var top = rect.bottom + pad;
+      var left = rect.left + rect.width / 2;
+      var box = tooltip.getBoundingClientRect();
+      if (left + box.width / 2 > window.innerWidth - pad) {
+        left = window.innerWidth - pad - box.width / 2;
+      }
+      left = Math.max(pad, left);
+      tooltip.style.left = Math.round(left - box.width / 2) + "px";
+      tooltip.style.top = Math.round(top) + "px";
+    }
+
+    function show(el) {
+      var def = el.getAttribute("data-def");
+      if (!def) return;
+      tooltip.textContent = def;
+      shown = el;
+      tooltip.style.visibility = "visible";
+      tooltip.style.opacity = "1";
+      tooltip.setAttribute("aria-hidden", "false");
+      positionTooltip(el);
+    }
+
+    function hide() {
+      shown = null;
+      tooltip.style.visibility = "hidden";
+      tooltip.style.opacity = "0";
+      tooltip.setAttribute("aria-hidden", "true");
+    }
+
+    var siglas = document.querySelectorAll(".sigla[data-def]");
+
+    for (var i = 0; i < siglas.length; i++) {
+      (function (el) {
+        el.addEventListener("mouseenter", function () {
+          show(el);
+        });
+        el.addEventListener("mouseleave", function () {
+          hide();
+        });
+        el.addEventListener("focus", function () {
+          show(el);
+        });
+        el.addEventListener("blur", function () {
+          hide();
+        });
+        el.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (shown === el) {
+            hide();
+          } else {
+            show(el);
+          }
+        });
+        el.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            if (shown === el) {
+              hide();
+            } else {
+              show(el);
+            }
+          } else if (e.key === "Escape") {
+            hide();
+            el.focus();
+          }
+        });
+      })(siglas[i]);
+    }
+
+    document.addEventListener("pointerdown", function (e) {
+      if (shown && !shown.contains(e.target)) {
+        hide();
+      }
+    });
+    document.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+    window.addEventListener("blur", hide);
   }
 
 })();

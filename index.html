@@ -40,6 +40,7 @@
         <ul class="nav-list">
           <li><a href="#inicio">Início</a></li>
           <li><a href="#mata-atlantica">Mata Atlântica</a></li>
+          <li><a href="#clima">Clima</a></li>
           <li><a href="#monitoramento">Monitoramento</a></li>
           <li><a href="#dados">Dados</a></li>
           <li><a href="#comparativo">Comparativo</a></li>
@@ -58,7 +59,7 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <h2 id="hero-title" class="hero-title">Nossa Floresta está em Alerta</h2>
-        <p class="hero-text">Dados reais do INPE mostram o impacto das queimadas na Mata Atlântica. Entenda o problema e descubra como você pode ajudar.</p>
+        <p class="hero-text">Dados reais do Instituto Nacional de Pesquisas Espaciais (INPE) mostram o impacto das queimadas na Mata Atlântica. Entenda o problema e descubra como você pode ajudar.</p>
         <div class="hero-stat-grid" aria-label="Dados de destaque">
           <div class="hero-stat">
             <span class="hero-stat-value" id="hero-ma-remaining">—</span>
@@ -110,6 +111,45 @@
       </div>
     </section>
 
+    <section id="clima" class="section" aria-labelledby="clima-title">
+      <div class="container">
+        <h2 id="clima-title" class="section-title">Mudanças climáticas: por que isso importa?</h2>
+        <p class="section-intro">As mudanças climáticas são alterações de longo prazo nos padrões de temperatura e clima. Embora também possam ocorrer por causas naturais, as atividades humanas são atualmente o principal fator responsável pelo aquecimento global observado, principalmente devido à emissão de gases de efeito estufa.</p>
+
+        <div class="clima-flow">
+          <span class="clima-flow-item">Mudanças climáticas</span><span class="clima-flow-arrow" aria-hidden="true">→</span>
+          <span class="clima-flow-item">Florestas</span><span class="clima-flow-arrow" aria-hidden="true">→</span>
+          <span class="clima-flow-item">Queimadas e desmatamento</span><span class="clima-flow-arrow" aria-hidden="true">→</span>
+          <span class="clima-flow-item">Monitoramento científico</span><span class="clima-flow-arrow" aria-hidden="true">→</span>
+          <span class="clima-flow-item">Informação e conscientização</span><span class="clima-flow-arrow" aria-hidden="true">→</span>
+          <span class="clima-flow-item">ODS 13</span>
+        </div>
+
+        <p class="clima-connection">Florestas, queimadas e clima estão conectados. A perda e a degradação da vegetação podem contribuir para as emissões de gases de efeito estufa e reduzir a capacidade dos ecossistemas de armazenar carbono. Ao mesmo tempo, alterações nas condições climáticas, como aumento das temperaturas e períodos de seca, podem favorecer condições de maior risco de incêndios florestais.</p>
+
+        <div class="alert-box clima-highlight" role="note">
+          <strong>Informação também é uma forma de ação</strong>
+          <p>O monitoramento por satélites e a produção de dados científicos ajudam pesquisadores, órgãos públicos e a sociedade a compreender mudanças no território, identificar áreas afetadas e apoiar ações de prevenção, planejamento e resposta.</p>
+        </div>
+
+        <div class="ods-card">
+          <h3 class="ods-card-title">ODS 13 — Ação Contra a Mudança Global do Clima</h3>
+          <p class="ods-card-text">A ODS 13 integra os Objetivos de Desenvolvimento Sustentável das Nações Unidas e propõe a adoção de medidas urgentes para combater as mudanças climáticas e seus impactos.</p>
+          <p class="ods-card-text">Este projeto contribui principalmente para a educação, conscientização e disseminação de informações científicas relacionadas às mudanças climáticas, aproximando dados sobre queimadas, desmatamento e conservação ambiental da população.</p>
+          <a href="https://brasil.un.org/pt-br/sdgs/13" target="_blank" rel="noopener noreferrer" class="source-link">Saiba mais sobre a ODS 13</a>
+        </div>
+
+        <p class="clima-sources">
+          Fontes:
+          <a href="https://brasil.un.org/pt-br/175180-o-que-s%C3%A3o-mudan%C3%A7as-clim%C3%A1ticas" target="_blank" rel="noopener noreferrer" class="source-link">ONU — mudanças climáticas</a>
+          <a href="https://brasil.un.org/pt-br/sdgs/13" target="_blank" rel="noopener noreferrer" class="source-link">ONU — ODS 13</a>
+          <a href="https://www.gov.br/inpe/pt-br/acesso-a-informacao/perguntas-frequentes/principais-produtos-e-servicos-do-inpe/monitoramento-do-territorio-mudancas-climaticas/o-que-sao-mudancas-climaticas" target="_blank" rel="noopener noreferrer" class="source-link">INPE — mudanças climáticas</a>
+          <a href="https://www.gov.br/inpe/pt-br/acesso-a-informacao/perguntas-frequentes/principais-produtos-e-servicos-do-inpe/monitoramento-do-territorio-queimadas/por-que-o-inpe-monitora" target="_blank" rel="noopener noreferrer" class="source-link">INPE — monitoramento de queimadas</a>
+          <a href="https://www.ipcc.ch/srccl/chapter/summary-for-policymakers/" target="_blank" rel="noopener noreferrer" class="source-link">IPCC — Climate Change and Land</a>
+        </p>
+      </div>
+    </section>
+
     <section id="monitoramento" class="section section--dark" aria-labelledby="mon-title">
       <div class="container">
         <h2 id="mon-title" class="section-title">Como o monitoramento funciona?</h2>
@@ -119,7 +159,7 @@
             <span class="step-number" aria-hidden="true">1</span>
             <div>
               <h3>Detectar</h3>
-              <p>Satélites como o <strong>AQUA</strong> e <strong>Terra</strong> (NASA/USGS) monitoram a superfície do Brasil a cada poucas horas, detectando focos de calor com o sensor MODIS.</p>
+              <p>Satélites como o <strong>AQUA</strong> e <strong>Terra</strong> (<span class="sigla" tabindex="0" role="button" data-def="Administração Nacional da Aeronáutica e Espaço dos Estados Unidos" aria-label="NASA — Administração Nacional da Aeronáutica e Espaço dos Estados Unidos" aria-describedby="sigla-tooltip">NASA<span class="sigla-mark" aria-hidden="true">ⓘ</span></span>/USGS) monitoram a superfície do Brasil a cada poucas horas, detectando focos de calor com o sensor <span class="sigla" tabindex="0" role="button" data-def="Moderate Resolution Imaging Spectroradiometer — instrumento utilizado para observação da superfície terrestre" aria-label="MODIS — Moderate Resolution Imaging Spectroradiometer, instrumento de observação da superfície terrestre" aria-describedby="sigla-tooltip">MODIS<span class="sigla-mark" aria-hidden="true">ⓘ</span></span>.</p>
             </div>
           </div>
           <div class="step">
@@ -329,7 +369,7 @@
           </div>
           <div class="source-item">
             <h3>Atlas da Mata Atlântica 2024-2025</h3>
-            <p>Dados de desflorestamento e regeneração da Mata Atlântica (Inpe, SOS MA, Fundação SPA, ISPN, ICMBio, SADS/RS).</p>
+            <p>Levantamento anual de desflorestamento e regeneração da Mata Atlântica, realizado pela Fundação SOS Mata Atlântica em colaboração com o INPE, com apoio do ICMBio.</p>
             <a href="http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf" target="_blank" rel="noopener" class="source-link">Baixar PDF do Atlas →</a>
           </div>
           <div class="source-item">
@@ -338,6 +378,55 @@
             <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="source-link">socioambiental.org →</a>
           </div>
         </div>
+        <details class="glossary">
+          <summary>
+            <span>Legenda de siglas</span>
+            <span class="glos-arrow" aria-hidden="true">▾</span>
+          </summary>
+          <p class="glossary-intro">Significado das siglas e abreviaturas utilizadas neste site, organizadas por grupo.</p>
+
+          <h4 class="glossary-cat">Satélites e sensores</h4>
+          <dl class="glossary-list">
+            <div class="glos-item"><dt>AQUA</dt><dd>Satélite de observação da Terra da NASA, lançado em 2002, que coleta dados sobre atmosfera, oceanos e superfície.</dd></div>
+            <div class="glos-item"><dt>Terra</dt><dd>Satélite de observação da Terra da NASA, lançado em 1999, usado no monitoramento ambiental global.</dd></div>
+            <div class="glos-item"><dt>MODIS</dt><dd>Moderate Resolution Imaging Spectroradiometer — sensor a bordo dos satélites Aqua e Terra, usado para observar a superfície terrestre e detectar focos de calor.</dd></div>
+          </dl>
+
+          <h4 class="glossary-cat">Instituições e organizações</h4>
+          <dl class="glossary-list">
+            <div class="glos-item"><dt>INPE</dt><dd>Instituto Nacional de Pesquisas Espaciais — agência espacial brasileira responsável pelo monitoramento de queimadas por satélite.</dd></div>
+            <div class="glos-item"><dt>NASA</dt><dd>Administração Nacional da Aeronáutica e Espaço dos Estados Unidos — agência espacial norte-americana.</dd></div>
+            <div class="glos-item"><dt>USGS</dt><dd>United States Geological Survey — Serviço Geológico dos Estados Unidos, parceiro da NASA nos dados de satélite.</dd></div>
+            <div class="glos-item"><dt>ONU</dt><dd>Organização das Nações Unidas — organização internacional que reúne países para cooperação em paz, direitos humanos e desenvolvimento sustentável.</dd></div>
+            <div class="glos-item"><dt>IPCC</dt><dd>Painel Intergovernamental sobre Mudanças Climáticas — grupo científico criado pela ONU para avaliar as evidências sobre mudanças climáticas.</dd></div>
+            <div class="glos-item"><dt>IBAMA</dt><dd>Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis — órgão federal de fiscalização ambiental.</dd></div>
+            <div class="glos-item"><dt>ICMBio</dt><dd>Instituto Chico Mendes de Conservação da Biodiversidade — órgão federal responsável pelas unidades de conservação.</dd></div>
+            <div class="glos-item"><dt>SOS MA</dt><dd>Fundação SOS Mata Atlântica — organização não governamental dedicada à defesa e ao conhecimento do bioma.</dd></div>
+            <div class="glos-item"><dt>ISA</dt><dd>Instituto Socioambiental — organização brasileira que atua em temas socioambientais.</dd></div>
+            <div class="glos-item"><dt>IPAM</dt><dd>Instituto de Pesquisa Ambiental da Amazônia — instituto de pesquisa e conservação ambiental.</dd></div>
+            <div class="glos-item"><dt>OECO</dt><dd>Instituto O Eco — organização dedicada ao jornalismo ambiental.</dd></div>
+            <div class="glos-item"><dt>SEMIL</dt><dd>Secretaria de Meio Ambiente, Infraestrutura e Logística do Estado de São Paulo.</dd></div>
+            <div class="glos-item"><dt>CFB</dt><dd>Corpo de Bombeiros — corporação que atua no combate a incêndios florestais (ex.: Operação SP Sem Fogo).</dd></div>
+            <div class="glos-item"><dt>UFV</dt><dd>Universidade Federal de Viçosa.</dd></div>
+          </dl>
+
+          <h4 class="glossary-cat">Programas, sistemas e projetos</h4>
+          <dl class="glossary-list">
+            <div class="glos-item"><dt>ODS</dt><dd>Objetivos de Desenvolvimento Sustentável — 17 metas globais definidas pela ONU.</dd></div>
+            <div class="glos-item"><dt>BDQueimadas</dt><dd>Banco de Dados de Queimadas do INPE — repositório de focos de calor detectados por satélite.</dd></div>
+            <div class="glos-item"><dt>TerraBrasilis</dt><dd>Plataforma do INPE para análise e divulgação de dados de monitoramento ambiental.</dd></div>
+            <div class="glos-item"><dt>InfoQueima</dt><dd>Boletim de queimadas do INPE com informações mensais sobre focos de calor.</dd></div>
+            <div class="glos-item"><dt>MapBiomas</dt><dd>Iniciativa colaborativa que mapeia a cobertura e o uso da terra no Brasil por imagens de satélite.</dd></div>
+            <div class="glos-item"><dt>Monitor do Fogo</dt><dd>Ferramenta do MapBiomas que acompanha a área queimada nos biomas brasileiros.</dd></div>
+            <div class="glos-item"><dt>SIGAM</dt><dd>Sistema Integrado de Gestão Ambiental — plataforma de dados ambientais do estado de São Paulo.</dd></div>
+          </dl>
+
+          <h4 class="glossary-cat">Termos e tecnologias</h4>
+          <dl class="glossary-list">
+            <div class="glos-item"><dt>PIB</dt><dd>Produto Interno Bruto — soma do valor de tudo o que é produzido em um país ou região em determinado período.</dd></div>
+            <div class="glos-item"><dt>QR Code</dt><dd>Quick Response Code (código de resposta rápida) — imagem que, ao ser lida pela câmera do celular, abre um link.</dd></div>
+          </dl>
+        </details>
         <p class="sources-update">Última atualização dos dados: 11/08/2026 | Consulta realizada em: 09/09/2026</p>
       </div>
     </section>
@@ -346,6 +435,12 @@
 
   <footer class="site-footer" role="contentinfo">
     <div class="container">
+      <div class="footer-ods">
+        <img src="img/sdg-13.png" alt="" class="footer-ods-icon">
+        <p class="footer-ods-text">Projeto alinhado à ODS 13 — Ação Contra a Mudança Global do Clima</p>
+        <a href="https://brasil.un.org/pt-br/sdgs/13" target="_blank" rel="noopener noreferrer" class="footer-ods-link">Conheça a ODS 13</a>
+        <p class="footer-ods-note">Alinhamento temático e educacional. Não representa certificação, parceria, financiamento ou endosso oficial das Nações Unidas.</p>
+      </div>
       <p class="footer-text">Portal educacional sem vínculo institucional com o INPE ou SOS Mata Atlântica.</p>
       <p class="footer-text">Projeto de Extensão — Inovação, Ciência e Transformação Digital</p>
       <p class="footer-text">Douglas Daniel Lopes Cardoso da Silva — Análise e Desenvolvimento de Sistemas</p>

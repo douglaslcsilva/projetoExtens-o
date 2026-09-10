@@ -1006,3 +1006,308 @@ h1, h2, h3, h4 {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ---------- Clima / Mudanças climáticas ---------- */
+.clima-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  max-width: 900px;
+  margin: 0 auto var(--space-8);
+}
+
+.clima-flow-item {
+  background: var(--c-slate-100);
+  border: 1px solid var(--c-slate-200);
+  color: var(--c-slate-700);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-4);
+}
+
+.clima-flow-arrow {
+  color: var(--c-slate-400);
+  font-size: var(--fs-sm);
+}
+
+.clima-connection {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto var(--space-8);
+  color: var(--c-slate-600);
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-lg);
+}
+
+.clima-highlight {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ods-card {
+  max-width: 760px;
+  margin: var(--space-10) auto 0;
+  background: var(--c-white);
+  border: 1px solid var(--c-slate-200);
+  border-left: 4px solid #3f7e44;
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.ods-card-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--c-slate-900);
+  margin-bottom: var(--space-3);
+}
+
+.ods-card-text {
+  color: var(--c-slate-600);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+.ods-card .source-link {
+  margin: var(--space-1) 0 0;
+}
+
+.clima-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  max-width: 860px;
+  margin: var(--space-8) auto 0;
+  font-size: var(--fs-xs);
+  color: var(--c-slate-500);
+  text-align: center;
+}
+
+.clima-sources .source-link {
+  margin-right: 0;
+}
+
+/* ---------- Siglas: tooltip acessível ---------- */
+.sigla {
+  position: relative;
+  display: inline;
+  cursor: help;
+  border-bottom: 1px dotted var(--c-slate-400);
+  color: inherit;
+}
+
+.sigla-mark {
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: 1px;
+  color: var(--c-green-600);
+}
+
+.sigla:focus-visible {
+  outline: 2px solid var(--c-green-500);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
+.sigla-tooltip {
+  position: fixed;
+  z-index: 1400;
+  max-width: 300px;
+  background: var(--c-slate-900);
+  color: var(--c-white);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+/* ---------- Glossário de siglas ---------- */
+.glossary {
+  max-width: 680px;
+  margin: 0 auto var(--space-8);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+.glossary summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--c-green-700);
+  font-weight: var(--fw-semibold);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--c-slate-200);
+  border-radius: 999px;
+  background: var(--c-white);
+}
+
+.glossary summary::-webkit-details-marker {
+  display: none;
+}
+
+.glossary[open] summary {
+  border-color: var(--c-green-500);
+}
+
+.glossary[open] summary .glos-arrow {
+  transform: rotate(180deg);
+}
+
+.glos-arrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+  color: var(--c-slate-500);
+}
+
+.glossary-intro {
+  color: var(--c-slate-500);
+  font-size: var(--fs-xs);
+  margin: var(--space-4) auto 0;
+  max-width: 520px;
+}
+
+.glossary-cat {
+  margin: var(--space-6) 0 var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--c-slate-900);
+  text-align: left;
+}
+
+.glossary-cat:first-of-type {
+  margin-top: var(--space-4);
+}
+
+.glossary-list {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  text-align: left;
+}
+
+.glossary-list .glos-item {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px dashed var(--c-slate-200);
+  color: var(--c-slate-600);
+}
+
+.glossary-list .glos-item:last-child {
+  border-bottom: none;
+}
+
+.glossary-list dt {
+  flex-shrink: 0;
+  font-weight: var(--fw-bold);
+  color: var(--c-slate-900);
+  min-width: 96px;
+}
+
+.glossary-list dd {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .clima-flow-item,
+  .clima-flow-arrow {
+    font-size: var(--fs-xs);
+  }
+
+  .clima-connection {
+    font-size: var(--fs-base);
+  }
+
+  .glossary-list .glos-item {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+/* ---------- Rodapé: ODS 13 ---------- */
+.footer-ods {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-ods-icon {
+  height: 84px;
+  width: auto;
+}
+
+.footer-ods-text {
+  font-size: var(--fs-sm);
+  color: var(--c-slate-300);
+}
+
+.footer-ods-link {
+  font-size: var(--fs-sm);
+  color: var(--c-green-400);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-ods-note {
+  font-size: var(--fs-xs);
+  color: var(--c-slate-500);
+  max-width: 540px;
+  text-align: center;
+  line-height: var(--lh-relaxed);
+}
+
+/* ---------- Prevenção: microinterações sutis dos cards ----------
+   Escopo: apenas os cards de dicas da seção "Como prevenir queimadas"
+   (.card--white). As demais seções mantêm o comportamento atual. */
+.card--white {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.card--white .card-icon {
+  transition: transform 220ms ease;
+}
+
+.card--white:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.09), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.card--white:hover .card-icon {
+  transform: scale(1.05);
+}
+
+/* Toque em dispositivos: cards estáticos, sem hover "preso" */
+@media (hover: none) {
+  .card--white:hover {
+    transform: none;
+    box-shadow: var(--shadow-md);
+  }
+
+  .card--white:hover .card-icon {
+    transform: none;
+  }
+}
+
+/* Usuários com preferência por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .card--white:hover,
+  .card--white:hover .card-icon {
+    transform: none;
+  }
+}
