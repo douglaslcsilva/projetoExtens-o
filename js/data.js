@@ -6,7 +6,7 @@ const FIRE_DATA = {
     lastUpdate: "11/08/2026",
     period: "Janeiro a agosto de 2026 (parcial)",
     source: "Programa Queimadas / Instituto Nacional de Pesquisas Espaciais (INPE)",
-    sourceUrl: "https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/",
+    sourceUrl: "https://data.inpe.br/queimadas/dados-abertos/",
     dataSourceUrl: "https://data.inpe.br/queimadas/dados-abertos/",
     consultationDate: "09/09/2026",
     methodologyNote: "Dados do satélite de referência AQUA Tarde (sensor MODIS, pixel ~1km). Focos representam detecções de fogo ativo e NÃO correspondem diretamente a incêndios individuais ou áreas queimadas."
