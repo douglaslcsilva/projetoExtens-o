@@ -16,7 +16,18 @@
   <header class="site-header" role="banner">
     <div class="header-inner container">
       <div class="logo-area">
-        <span class="logo-icon" aria-hidden="true">🔥</span>
+        <span class="logo-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 20.5h17"/>
+            <path d="M12 20.5V11"/>
+            <path d="M12 13.5C10.6 12.6 9 11.8 8.2 10.8"/>
+            <path d="M12 13.5C13.4 12.6 15 11.8 15.8 10.8"/>
+            <path d="M8 11C8 7.2 9.8 5.2 12 5.2C14.2 5.2 16 7.2 16 11Z"/>
+            <circle cx="10.2" cy="9.2" r="0.7"/>
+            <circle cx="12" cy="7.4" r="0.7"/>
+            <circle cx="13.8" cy="9.2" r="0.7"/>
+          </svg>
+        </span>
         <div>
           <h1 class="site-title">Mata Atlântica em Alerta</h1>
           <p class="site-subtitle">Portal Educacional de Monitoramento de Queimadas</p>
@@ -147,10 +158,11 @@
 
         <div class="chart-wrapper">
           <h3>Focos de Queimada — Série Histórica (Mata Atlântica)</h3>
-          <div class="chart-container" style="position:relative; height:400px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:400px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados históricos de queimadas na Mata Atlântica" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-historical" aria-label="Gráfico de barras mostrando focos de queimada na Mata Atlântica por ano" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">* Apenas anos com dados verificados em fontes oficiais. Consulte DATA_SOURCES.md para detalhes.</p>
+          <p class="chart-note">Fonte: Programa Queimadas / INPE — <a href="https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a>. <span class="note-secondary">* Apenas anos com dados verificados em fontes oficiais.</span></p>
         </div>
 
         <div class="stat-cards" aria-label="Estatísticas de destaque">
@@ -173,10 +185,11 @@
 
         <div class="chart-wrapper">
           <h3>Desflorestamento na Mata Atlântica — Atlas 2024-2025</h3>
-          <div class="chart-container" style="position:relative; height:350px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:350px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados de desflorestamento da Mata Atlântica" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-atlas" aria-label="Gráfico de barras mostrando desflorestamento na Mata Atlântica por período" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">Fonte: Atlas da Mata Atlântica / Inpe / SOS Mata Atlântica. Valores em hectares.</p>
+          <p class="chart-note">Fonte: Atlas da Mata Atlântica / INPE / SOS Mata Atlântica — <a href="http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
       </div>
     </section>
@@ -188,18 +201,20 @@
 
         <div class="chart-wrapper">
           <h3>Focos Mensais — Brasil (todos os biomas)</h3>
-          <div class="chart-container" style="position:relative; height:400px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:400px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados mensais de queimadas no Brasil" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-monthly" aria-label="Gráfico de barras comparando focos mensais de 2026 com média histórica" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note" id="comp-source"></p>
+          <p class="chart-note">Fonte: Boletim InfoQueima, Vol. 11, Nº 06, junho/2026, INPE — <a href="https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
 
         <h3>Comparativo por Bioma — Junho/2026</h3>
         <div class="chart-wrapper">
-          <div class="chart-container" style="position:relative; height:400px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:400px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados comparativos por bioma" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-bioma" aria-label="Gráfico comparando focos de junho de 2026 com média histórica por bioma" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">Fonte: Boletim InfoQueima, Vol. 11, Nº 06, junho/2026, INPE</p>
+          <p class="chart-note">Fonte: Boletim InfoQueima, Vol. 11, Nº 06, junho/2026, INPE — <a href="https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
       </div>
     </section>
@@ -211,10 +226,11 @@
 
         <div class="chart-wrapper">
           <h3>Focos de Queimada — Estado de São Paulo</h3>
-          <div class="chart-container" style="position:relative; height:400px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:400px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados de queimadas em São Paulo" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-saopaulo" aria-label="Gráfico mostrando focos de queimada no estado de São Paulo ao longo dos anos" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note" id="sp-note"></p>
+          <p class="chart-note">Fonte: INPE / TerraBrasilis — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a>. <span class="note-secondary">Dados AQUA M-T (MODIS), recorte estadual, não filtrado por bioma.</span></p>
         </div>
 
         <div class="alert-box" role="alert">
@@ -224,10 +240,11 @@
 
         <div class="chart-wrapper">
           <h3>Junho/2026 em São Paulo</h3>
-          <div class="chart-container" style="position:relative; height:300px;">
+          <div class="chart-container chart-clickable" style="position:relative; height:300px;" tabindex="0" role="link" aria-label="Consultar fonte oficial dos dados de queimadas em São Paulo em junho de 2026" title="Clique para consultar a fonte oficial (abre em nova aba)">
             <canvas id="chart-sp-june" aria-label="Gráfico comparando junho de 2026 com média histórica em São Paulo" role="img"></canvas>
+            <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note" id="sp-june-source"></p>
+          <p class="chart-note">Fonte: Boletim InfoQueima, Vol. 11, Nº 06, junho/2026, INPE — <a href="https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
       </div>
     </section>
@@ -319,10 +336,6 @@
             <h3>ISA — Instituto Socioambiental</h3>
             <p>Análise "Dinâmica do fogo na Mata Atlântica entre 1985 e 2023 e o caso de 2024" (jan/2025), citando MapBiomas Fogo.</p>
             <a href="https://www.socioambiental.org" target="_blank" rel="noopener" class="source-link">socioambiental.org →</a>
-          </div>
-          <div class="source-item">
-            <h3>Documentação completa</h3>
-            <p>Para detalhes completos sobre fontes, filtros e metodologia, consulte o arquivo DATA_SOURCES.md.</p>
           </div>
         </div>
         <p class="sources-update">Última atualização dos dados: 11/08/2026 | Consulta realizada em: 09/09/2026</p>

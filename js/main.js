@@ -12,6 +12,10 @@
   /* ---------- Counter API ---------- */
   var COUNTER_API = "https://script.google.com/macros/s/AKfycbzAYitvMzctgxXXgfMbyGWJb3ZhQTx4DVrVhuru246rD3j4DXF7nZ8wYKFagNZFwd7wWQ/exec";
 
+  /* ---------- Fontes dos gráficos ---------- */
+  var URL_INFOQUEIMA = "https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf";
+  var URL_BDQUEIMADAS = "https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/";
+
   /* ---------- Wait for DOM ---------- */
   document.addEventListener("DOMContentLoaded", init);
 
@@ -92,8 +96,11 @@
     var ctx = document.getElementById("chart-historical");
     if (!ctx) return;
 
+    setupSourceLink("chart-historical", FIRE_DATA.metadata.sourceUrl);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "top" })],
       data: {
         labels: labels,
         datasets: [{
@@ -111,22 +118,23 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                var v = ctx.parsed.y;
-                if (v === null || v === undefined) return "Sem dados verificados";
-                return formatNumber(v) + " focos";
-              },
-              afterLabel: function (ctx) {
-                var item = h[ctx.dataIndex];
-                return item ? item.note : "";
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              var item = h[i];
+              return {
+                title: String(item.year) + (item.partial ? " (ano parcial)" : ""),
+                body: (item.count === null || item.count === undefined) ? "Sem dados verificados" : formatNumber(item.count) + " focos",
+                note: item.note,
+                url: item.sourceUrl,
+                linkText: "Acessar fonte"
+              };
+            })
           }
         },
         scales: {
           y: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -154,8 +162,11 @@
     var ctx = document.getElementById("chart-atlas");
     if (!ctx) return;
 
+    setupSourceLink("chart-atlas", FIRE_DATA.atlasSourceUrl);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "top" })],
       data: {
         labels: labels,
         datasets: [{
@@ -173,18 +184,23 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                var item = a[ctx.dataIndex];
-                var extra = item.note ? " (" + item.note + ")" : "";
-                return formatNumber(ctx.parsed.y) + " hectares" + extra;
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              var item = a[i];
+              return {
+                title: "Período " + item.period,
+                body: formatNumber(item.hectares) + " hectares desmatados",
+                note: item.note,
+                url: FIRE_DATA.atlasSourceUrl,
+                linkText: "Ver Atlas da Mata Atlântica"
+              };
+            })
           }
         },
         scales: {
           y: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Hectares", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -203,7 +219,6 @@
   function renderComparativo() {
     var d = FIRE_DATA;
     setSafe("comp-intro", d.metadata.scopeNote + ". Dados do satélite de referência AQUA Tarde (MODIS).");
-    setSafe("comp-source", "Fonte: " + d.monthlyComparison.source);
 
     renderMonthlyChart();
     renderBiomaChart();
@@ -220,8 +235,11 @@
     var ctx = document.getElementById("chart-monthly");
     if (!ctx) return;
 
+    setupSourceLink("chart-monthly", FIRE_DATA.monthlyComparison.sourceUrl);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "top" })],
       data: {
         labels: labels,
         datasets: [
@@ -253,20 +271,25 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: "top" },
+          legend: { position: "bottom" },
           tooltip: {
-            callbacks: {
-              afterBody: function (items) {
-                var idx = items[0].dataIndex;
-                var item = mc.data[idx];
-                return "Diferença: " + formatPercent(item.diff2026);
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              var item = mc.data[i];
+              return {
+                title: item.month + " — Brasil (todos os biomas)",
+                body: "2026: " + formatNumber(item.y2026) + " focos | Média: " + formatNumber(item.avg) + " focos",
+                note: "Diferença: " + formatPercent(item.diff2026),
+                url: FIRE_DATA.monthlyComparison.sourceUrl,
+                linkText: "Ver Boletim InfoQueima"
+              };
+            })
           }
         },
         scales: {
           y: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -289,8 +312,11 @@
     var ctx = document.getElementById("chart-bioma");
     if (!ctx) return;
 
+    setupSourceLink("chart-bioma", URL_INFOQUEIMA);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "right" })],
       data: {
         labels: labels,
         datasets: [
@@ -317,22 +343,27 @@
         maintainAspectRatio: false,
         indexAxis: "y",
         plugins: {
-          legend: { position: "top" },
+          legend: { position: "bottom" },
           tooltip: {
-            callbacks: {
-              afterBody: function (items) {
-                var idx = items[0].dataIndex;
-                var item = bc[idx];
-                var diff = item.fires2026 - item.avg;
-                var pct = ((diff / item.avg) * 100).toFixed(1);
-                return "Diferença vs média: " + (diff >= 0 ? "+" : "") + pct + "%";
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              var item = bc[i];
+              var diff = item.fires2026 - item.avg;
+              var pct = ((diff / item.avg) * 100).toFixed(1);
+              return {
+                title: item.name,
+                body: "Jun/2026: " + formatNumber(item.fires2026) + " focos | Média: " + formatNumber(item.avg) + " focos",
+                note: "Diferença vs média: " + (diff >= 0 ? "+" : "") + pct.replace(".", ",") + "%",
+                url: URL_INFOQUEIMA,
+                linkText: "Ver Boletim InfoQueima"
+              };
+            })
           }
         },
         scales: {
           x: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -350,8 +381,6 @@
 
   function renderRegiao() {
     var sp = FIRE_DATA.saoPaulo;
-    setSafe("sp-note", "Fonte: " + sp.note);
-    setSafe("sp-june-source", "Fonte: " + sp.june2026.source);
     setSafe("sp-why", "São Paulo tem recorde histórico de queimadas em 2024. " +
       "Jan-Set 2024: " + formatNumber(sp.records[sp.records.length - 1].count) +
       " focos — superando o recorde anterior de " + formatNumber(sp.records[0].count) +
@@ -376,8 +405,11 @@
     var ctx = document.getElementById("chart-saopaulo");
     if (!ctx) return;
 
+    setupSourceLink("chart-saopaulo", URL_BDQUEIMADAS);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "top" })],
       data: {
         labels: labels,
         datasets: [{
@@ -395,20 +427,23 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                return formatNumber(ctx.parsed.y) + " focos";
-              },
-              afterLabel: function (ctx) {
-                var item = sp.records[ctx.dataIndex];
-                return item.source + (item.note ? " — " + item.note : "");
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              var item = sp.records[i];
+              return {
+                title: item.year + " — São Paulo",
+                body: formatNumber(item.count) + " focos",
+                note: item.source + (item.note ? " — " + item.note : ""),
+                url: item.sourceUrl,
+                linkText: "Acessar fonte"
+              };
+            })
           }
         },
         scales: {
           y: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -428,10 +463,13 @@
     var ctx = document.getElementById("chart-sp-june");
     if (!ctx) return;
 
+    setupSourceLink("chart-sp-june", FIRE_DATA.saoPaulo.june2026.sourceUrl);
+
     new Chart(ctx, {
       type: "bar",
+      plugins: [makeValueLabelsPlugin({ position: "top" })],
       data: {
-        labels: ["Média Histórica (jun)", "Junho/2026"],
+        labels: ["Média histórica (jun/2010-2024)", "Junho/2026"],
         datasets: [{
           label: "Focos em São Paulo",
           data: [spj.historicalAverage, spj.fires2026],
@@ -453,20 +491,24 @@
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: function (ctx) {
-                var labels = [
-                  "Média (jun/2010-2024): " + formatNumber(spj.historicalAverage) + " focos",
-                  "Jun/2026: " + formatNumber(spj.fires2026) + " focos (" + formatPercent(spj.diffPercent) + " vs média)"
-                ];
-                return labels[ctx.dataIndex];
-              }
-            }
+            enabled: false,
+            external: makeTooltipHandler(function (i) {
+              return {
+                title: "São Paulo — Junho/2026",
+                body: i === 0
+                  ? "Média (jun/2010-2024): " + formatNumber(spj.historicalAverage) + " focos"
+                  : "Jun/2026: " + formatNumber(spj.fires2026) + " focos",
+                note: "Diferença: " + formatPercent(spj.diffPercent) + " vs média",
+                url: spj.sourceUrl,
+                linkText: "Ver Boletim InfoQueima"
+              };
+            })
           }
         },
         scales: {
           y: {
             beginAtZero: true,
+            grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
@@ -645,6 +687,152 @@
     }, { rootMargin: "-20% 0px -80% 0px" });
 
     sections.forEach(function (section) { observer.observe(section); });
+  }
+
+  /* ==========================================================================
+     11. Fonte oficial: gráfico clicável + hint com URL + teclado
+     ========================================================================== */
+
+  function setupSourceLink(canvasId, url) {
+    var ctx = document.getElementById(canvasId);
+    if (!ctx || !url) return;
+
+    var box = ctx.parentNode;
+    var hint = box ? box.querySelector(".chart-hint") : null;
+
+    ctx.style.cursor = "pointer";
+
+    ctx.addEventListener("click", function () {
+      window.open(url, "_blank", "noopener");
+    });
+
+    if (box) {
+      box.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          window.open(url, "_blank", "noopener");
+        }
+      });
+
+      function showUrl() {
+        if (hint) hint.textContent = url;
+      }
+
+      function showDefault() {
+        if (hint) hint.textContent = "Clique para consultar a fonte oficial";
+      }
+
+      box.addEventListener("mouseenter", showUrl);
+      box.addEventListener("mouseleave", showDefault);
+      box.addEventListener("focus", showUrl);
+      box.addEventListener("blur", showDefault);
+    }
+  }
+
+  /* ==========================================================================
+     12. Tooltip personalizado com link da fonte
+     ========================================================================== */
+
+  function getOrCreateTooltip(chart) {
+    var parent = chart.canvas.parentNode;
+    var tooltipEl = parent.querySelector(".chartjs-tooltip");
+    if (!tooltipEl) {
+      tooltipEl = document.createElement("div");
+      tooltipEl.className = "chartjs-tooltip";
+      parent.appendChild(tooltipEl);
+    }
+    return tooltipEl;
+  }
+
+  function makeTooltipHandler(getInfo) {
+    return function (context) {
+      var chart = context.chart;
+      var tooltip = context.tooltip;
+      var tooltipEl = getOrCreateTooltip(chart);
+
+      if (tooltip.opacity === 0 || !tooltip.dataPoints || !tooltip.dataPoints.length) {
+        tooltipEl.style.opacity = "0";
+        tooltipEl.style.pointerEvents = "none";
+        return;
+      }
+
+      var index = tooltip.dataPoints[0].dataIndex;
+      var info = getInfo(index) || {};
+
+      var html = "";
+      if (info.title) html += "<div class='tt-title'>" + info.title + "</div>";
+      if (info.body) html += "<div class='tt-body'>" + info.body + "</div>";
+      if (info.note) html += "<div class='tt-note'>" + info.note + "</div>";
+      if (info.url) {
+        html += "<a class='tt-link' href='" + info.url + "' target='_blank' rel='noopener'>" +
+          (info.linkText || "Acessar fonte") + " ↗</a>";
+      }
+
+      tooltipEl.innerHTML = html;
+      tooltipEl.style.opacity = "1";
+      tooltipEl.style.pointerEvents = "auto";
+
+      var canvasPos = chart.canvas.getBoundingClientRect();
+      var left = canvasPos.left + window.pageXOffset + tooltip.caretX;
+      var top = canvasPos.top + window.pageYOffset + tooltip.caretY - 12;
+      var maxLeft = canvasPos.left + window.pageXOffset + canvasPos.width - 320;
+
+      if (left + 360 > window.innerWidth + window.pageXOffset) left = maxLeft - 60;
+      if (left < 8) left = 8;
+      if (top < 8) top = 8;
+
+      tooltipEl.style.left = left + "px";
+      tooltipEl.style.top = top + "px";
+    };
+  }
+
+  /* ==========================================================================
+     13. Rótulos de valores exatos nas barras
+     ========================================================================== */
+
+  function makeValueLabelsPlugin(opts) {
+    opts = opts || {};
+    var horizontal = opts.position === "right";
+
+    return {
+      id: "valueLabels",
+      afterDatasetsDraw: function (chart) {
+        var ctx = chart.ctx;
+        if (!ctx) return;
+
+        ctx.save();
+        ctx.font = "600 11px 'Segoe UI', system-ui, sans-serif";
+        ctx.fillStyle = opts.color || "rgba(15,23,42,0.85)";
+
+        chart.data.datasets.forEach(function (dataset, dsIndex) {
+          var meta = chart.getDatasetMeta(dsIndex);
+          if (meta.hidden || !meta.data.length) return;
+
+          meta.data.forEach(function (bar, idx) {
+            var v = dataset.data[idx];
+            if (v === null || v === undefined || isNaN(v)) return;
+            var text = v.toLocaleString("pt-BR");
+            var x, y;
+
+            if (horizontal) {
+              x = bar.x + bar.width + 6;
+              y = bar.y + bar.height / 2;
+              ctx.textAlign = "left";
+              ctx.textBaseline = "middle";
+            } else {
+              x = bar.x + bar.width / 2;
+              y = bar.y - 6;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "bottom";
+            }
+
+            ctx.fillText(text, x, y);
+          });
+        });
+
+        ctx.restore();
+      }
+    };
   }
 
   /* ==========================================================================
