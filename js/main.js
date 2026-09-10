@@ -31,6 +31,7 @@
     setupMobileNav();
     setupActiveNav();
     initSiglaTooltips();
+    setupVideoFacade();
   }
 
   /* ==========================================================================
@@ -950,6 +951,52 @@
     document.addEventListener("scroll", hide, true);
     window.addEventListener("resize", hide);
     window.addEventListener("blur", hide);
+  }
+
+  /* ==========================================================================
+     25. Vídeo complementar (YouTube) — click-to-load
+     ========================================================================== */
+
+  function setupVideoFacade() {
+    var facade = document.getElementById("video-facade");
+    var wrapper = document.getElementById("video-wrapper");
+    var frame = wrapper ? wrapper.querySelector("iframe") : null;
+
+    if (!facade || !wrapper) {
+      return;
+    }
+
+    var thumb = facade.querySelector(".video-facade-thumb");
+    if (thumb) {
+      thumb.addEventListener("error", function () {
+        thumb.style.display = "none";
+      });
+    }
+
+    function activate() {
+      if (facade.classList.contains("is-hidden")) {
+        return;
+      }
+      facade.classList.add("is-hidden");
+      facade.setAttribute("aria-hidden", "true");
+      wrapper.removeAttribute("hidden");
+
+      if (document.activeElement === facade && frame) {
+        try {
+          frame.focus({ preventScroll: true });
+        } catch (err) {
+          frame.focus();
+        }
+      }
+    }
+
+    facade.addEventListener("click", activate);
+    facade.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        activate();
+      }
+    });
   }
 
 })();
