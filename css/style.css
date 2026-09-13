@@ -1221,45 +1221,6 @@ h1, h2, h3, h4 {
   margin-right: 0;
 }
 
-/* ---------- Siglas: tooltip acessível ---------- */
-.sigla {
-  position: relative;
-  display: inline;
-  cursor: help;
-  border-bottom: 1px dotted var(--c-slate-400);
-  color: inherit;
-}
-
-.sigla-mark {
-  font-size: 0.7em;
-  vertical-align: super;
-  margin-left: 1px;
-  color: var(--c-green-600);
-}
-
-.sigla:focus-visible {
-  outline: 2px solid var(--c-green-500);
-  outline-offset: 1px;
-  border-radius: 2px;
-}
-
-.sigla-tooltip {
-  position: fixed;
-  z-index: 1400;
-  max-width: 300px;
-  background: var(--c-slate-900);
-  color: var(--c-white);
-  font-size: var(--fs-xs);
-  line-height: 1.5;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-xl);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--transition-fast);
-  pointer-events: none;
-}
-
 /* ---------- Glossário de siglas ---------- */
 .glossary {
   max-width: 680px;

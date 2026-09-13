@@ -30,7 +30,7 @@ Data da documentação: 09/09/2026
 
 O **Mata Atlântica em Alerta** é um portal web educacional desenvolvido como parte do Projeto de Extensão — Inovação, Ciência e Transformação Digital, do curso de **Análise e Desenvolvimento de Sistemas**. O portal apresenta dados reais e verificados sobre queimadas na Mata Atlântica, explica como o monitoramento por satélite funciona e incentiva a população a adotar práticas preventivas e sustentáveis.
 
-Todos os dados quantitativos são provenientes de fontes oficiais (INPE/Programa Queimadas, SOS Mata Atlântica, SEMIL-SP, ISA/IPAM, MapBiomas), sem nenhum número inventado. As referências estão detalhadas na bibliografia (seção 13) e no arquivo `DATA_SOURCES.md`.
+Todos os dados quantitativos e gráficos são provenientes do **TerraBrasilis/INPE** (Programa Queimadas), e o conteúdo educativo tem como fontes a **SOS Mata Atlântica**, o **BDQueimadas** (INPE) e o **Atlas da Mata Atlântica** (INPE/SOS Mata Atlântica), sem nenhum número inventado. Não são utilizados dados de organizações com fins lucrativos ou de empresas privadas. As referências estão detalhadas na bibliografia (seção 13) e no arquivo `DATA_SOURCES.md`.
 
 ## 2. Objetivos e público-alvo
 
@@ -50,8 +50,8 @@ Todos os dados quantitativos são provenientes de fontes oficiais (INPE/Programa
 | # | Ação | Descrição |
 |---|------|-----------|
 | 1 | Análise do ambiente | Verificação do diretório de trabalho (vazio) e definição de escopo: HTML5, CSS3 e JavaScript puro. |
-| 2 | Pesquisa de dados oficiais | Consulta ao SOS Mata Atlântica e ao INPE/Programa Queimadas (InfoQueima, TerraBrasilis, dados abertos). |
-| 3 | Validação de fontes complementares | SIGAM/SEMIL-SP, Operação SP Sem Fogo, Folha/G1, ISA/IPAM, MapBiomas, OECO. |
+| 2 | Pesquisa de dados oficiais | Consulta ao SOS Mata Atlântica e ao INPE/Programa Queimadas (TerraBrasilis e dados abertos/BDQueimadas). |
+| 3 | Validação de fontes complementares | Descartadas fontes não oficiais ou de organizações privadas (MapBiomas, ISA/IPAM, SEMIL, mídia jornalística, etc.). |
 | 4 | Criação da estrutura de pastas | Diretórios: css/, js/, assets/, data/, scripts/. |
 | 5 | Desenvolvimento da página (index.html) | Single-page com seções e âncoras de navegação. |
 | 6 | Desenvolvimento dos estilos (style.css) | Design system com variáveis CSS, mobile-first, acessibilidade. |
@@ -91,7 +91,7 @@ projetoExtens-o/
 - **head:** charset UTF-8, viewport, meta description/keywords, título e folha de estilo.
 - **skip-link:** link de acessibilidade "Pular para o conteúdo principal".
 - **header:** logotipo, título e menu de navegação com botão hambúrguer no mobile.
-- **main id="inicio":** 10 seções (hero + 9 âncoras).
+- **main id="inicio":** 9 seções (hero + 8 âncoras).
 - **footer:** créditos e identificação do autor/curso.
 
 **Seções (id → conteúdo):**
@@ -99,15 +99,14 @@ projetoExtens-o/
 | Section | Título | Conteúdo |
 |---------|--------|----------|
 | inicio (.hero) | Nossa Floresta está em Alerta | Três estatísticas preenchidas via JS (hero-*). |
-| mata-atlantica | Por que a Mata Atlântica importa? | 4 cards: biodiversidade, população, água, débito histórico. |
+| mata-atlantica | Por que a Mata Atlântica importa? | 4 cards educativos (SOS MA e Atlas). |
+| video | Para entender melhor | Vídeo educativo do YouTube (click-to-load). |
 | monitoramento | Como o monitoramento funciona? | 4 etapas (Detectar, Processar, Informar, Entender). |
-| dados | Dados de Queimadas na Mata Atlântica | Gráfico histórico, 3 cards de estatísticas, gráfico do Atlas. |
-| comparativo | Comparativo: 2026 vs Média Histórica | Gráfico mensal Brasil e por bioma (jun/2026). |
-| regiao | Foco Regional: São Paulo e Vale do Paraíba | Gráficos de SP e justificativa regional. |
+| dados | Dados de Queimadas na Mata Atlântica | 3 gráficos TerraBrasilis + cartões de estatísticas. |
 | prevencao | Como prevenir queimadas | 4 cards de dicas. |
 | participar | Participe da pesquisa | Botão CTA, QR Code e créditos. |
 | impacto | Impacto desta ação | Número de participações (API). |
-| fontes | Fontes e Metodologia | Fontes oficiais com links. |
+| fontes | Fontes e Metodologia | Fontes aprovadas com links e glossário. |
 
 **Navegação:** âncoras `#id`, `scroll-behavior: smooth`, `scroll-padding-top` para compensar o header fixo; no mobile, painel lateral com overlay.
 
@@ -125,17 +124,16 @@ Define a constante global `FIRE_DATA`, carregada antes de `main.js`.
 
 **Campos do objeto:**
 
-- `metadata`: escopo, satélite de referência (AQUA Tarde/MODIS), última atualização, período, fonte e nota metodológica.
-- `mataAtlantica`: área original (131.007.456 ha), % remanescente (24%), % florestas maduras (12,4%), nº estados (17), % população (72%), % PIB (80%).
-- `historical`: série anual de focos com `year`, `count` (ou `null`) e `note`; `partial: true` para ano parcial.
-- `juneData2026`: jun/2026 do bioma (428 focos; média 711).
-- `saoPaulo`: records (ano, contagem, fonte) + `june2026` (58 focos; média 241).
-- `monthlyComparison`: `avg`, `y2026`, `diff2026` por mês (Brasil).
-- `biomaComparison`: focos jun/2026 vs média por bioma.
-- `finding2024`: 993.117 ha queimados (jan–out/2024), +636% vs 2023.
-- `atlasDeforestation`: desflorestamento 2017–2025 em hectares.
-
-Valores `null` significam "sem valor oficial verificado na pesquisa"; o gráfico exibe "Sem dados verificados".
+- `metadata`: escopo (bioma Mata Atlântica), satélite de referência (AQUA Tarde/MODIS), última atualização, período 2018-2026, fonte (TerraBrasilis/INPE), data de consulta e nota metodológica.
+- `mataAtlantica`: área de aplicação da Lei da Mata Atlântica (131.007.456 ha), florestas maduras remanescentes (12,4% — Atlas da Mata Atlântica), nº de estados (17), % da população (72%) e % do PIB (80%).
+- `annual`: série anual de focos 2018-2026 (TerraBrasilis), com `partial: true` para 2026 (ano em curso).
+- `peak2024`: maior total da série (23.115 focos em 2024).
+- `ytd2026`: total de janeiro a setembro de 2026 (5.027, parcial).
+- `monthly2026`: focos de 2026 mês a mês (jan–set) comparados à média 2019-2025; setembro marcado como mês em curso.
+- `avgPeriod`: rótulo do período médio usado na comparação (2019-2025).
+- `ufTotal`: focos acumulados 2018-2026 por estado (top 10 do bioma), com destaque para São Paulo.
+- `sp2024`: focos em São Paulo em 2024 (7.099) e nota explicativa.
+- `periodNote`: explicação de que a série soma as classes do painel (Vegetação Nativa, Desmatamento Recente, Desmatamento Consolidado, Outros).
 
 ## 8. Documentação — js/main.js
 
@@ -144,14 +142,12 @@ Todo o código está em uma IIFE com `"use strict"`. Configurações no topo: `G
 **Funções:**
 
 - `init()` — orquestra as renderizações após `DOMContentLoaded`.
-- `renderHeroStats()` — preenche os números de destaque inicial.
+- `renderHeroStats()` — preenche os números de destaque inicial (12,4% florestas maduras; 23.115 focos em 2024; 5.027 focos jan-set/2026).
 - `renderMonitoramentoSource()` — insere a nota metodológica do INPE.
-- `renderDados()` — cartões de estatísticas e gráficos histórico + Atlas.
-- `renderHistoricalChart()` / `renderAtlasChart()` — gráficos de barras.
-- `renderComparativo()` — gráficos mensal e por bioma (jun/2026).
-- `renderMonthlyChart()` / `renderBiomaChart()` — Chart.js com cores dinâmicas.
-- `renderRegiao()` — textos regionais e gráficos de SP.
-- `renderSPChart()` / `renderSPJuneChart()` — gráficos de SP.
+- `renderDados()` — texto introdutório, cartões de estatísticas e os 3 gráficos TerraBrasilis.
+- `renderAnnualChart()` — gráfico de barras da série anual 2018-2026 (Mata Atlântica).
+- `renderMonthlyChart()` — gráfico mensal 2026 vs média 2019-2025 (jan–set).
+- `renderUfChart()` — gráfico horizontal de focos por estado (2018-2026).
 - `renderPrevencao()` — conteúdo estático (consistência do fluxo).
 - `renderParticipar()` — aplica URL do Forms e gera o QR Code.
 - `setupImpacto()` — consulta a API de participações ao carregar.
@@ -165,11 +161,11 @@ Todo o código está em uma IIFE com `"use strict"`. Configurações no topo: `G
 
 **Contador:** chama `COUNTER_API + "?action=stats&callback=__counterCallback"`. Resposta `{visits, responses, updatedAt}`; exibe somente `responses`. Se a API falhar, o elemento mantém "--" — o site nunca quebra.
 
-**Gráficos Chart.js:** 6 gráficos de barras (histórico, Atlas, mensal, por bioma, SP anual, SP junho), com tooltips em pt-BR e cores por faixa de valor.
+**Gráficos Chart.js:** 3 gráficos de barras (série anual, mensal 2026 vs média, por estado), todos com fonte única **TerraBrasilis/INPE**, tooltips em pt-BR e cores por faixa de valor.
 
 ## 9. Documentação — scripts/process_data.py
 
-Script em Python (stdlib) que baixa `focos_mensal_br_YYYYMM.csv` do INPE (2010 a 8/2026), filtra o bioma "Mata Atlântica" e o estado de São Paulo, agrega por ano/mês e gera `data/fires_processed.json`.
+Script em Python (stdlib) que baixa `focos_mensal_br_YYYYMM.csv` do BDQueimadas/INPE, filtra o bioma "Mata Atlântica" e o estado de São Paulo, agrega por ano/mês e gera `data/fires_processed.json`. É uma ferramenta opcional de reprodução — os dados exibidos no portal vêm diretamente do TerraBrasilis.
 
 > Observação: os CSVs incluem todos os satélites; os valores podem diferir dos exibidos no portal, que usa somente o satélite de referência (AQUA Tarde).
 
@@ -202,28 +198,19 @@ Atualizações: `git add .` → `git commit` → `git push` (deploy automático)
 
 - Satélite de referência: AQUA Tarde (MODIS, ~1 km).
 - "Foco de queimada": detecção de fogo ativo em um pixel — não representa incêndio individual nem área queimada.
-- Escopo: bioma Mata Atlântica (17 estados da Lei 11.428/2006), com recorte para SP.
-- Período: 2010 a 2026 (parcial até 11/08/2026).
-- Comparações usam períodos equivalentes (jun/2026 vs jun/histórico).
-- Nenhum número inventado; todas as fontes em DATA_SOURCES.md.
+- Escopo: bioma Mata Atlântica (17 estados da Lei 11.428/2006), com destaque para São Paulo.
+- Período: 2018 a 2026 (parcial até setembro de 2026).
+- Comparações usam períodos equivalentes (2026 vs média 2019-2025 nos mesmos meses; totais anuais completos).
+- Fonte única dos gráficos: TerraBrasilis/INPE. Conteúdo educativo: SOS Mata Atlântica, BDQueimadas e Atlas da Mata Atlântica.
+- Nenhum número inventado; todas as fontes em `DATA_SOURCES.md`.
 
 ## 13. Bibliografia
 
 ### Fontes primárias
-1. INPE — Programa Queimadas. *Dados Abertos*. https://data.inpe.br/queimadas/dados-abertos/
-2. INPE — Programa Queimadas. *TerraBrasilis — Estatísticas por estado*. https://terrabrasilis.dpi.inpe.br/queimadas/situacao-atual/estatisticas/estatisticas_estados/
-3. INPE — Programa Queimadas. *Boletim InfoQueima, Vol. 11, Nº 06 (jun/2026)*. https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf
-4. SOS MATA ATLÂNTICA. *Mata Atlântica — Causas*. https://www.sosma.org.br/causas/mata-atlantica
-5. SOS MATA ATLÂNTICA; INPE; et al. *Atlas da Mata Atlântica 2024-2025*. http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf
-6. SEMIL/SP. *Incêndios florestais em SP (jan–jul 2024)*. https://sigam.ambiente.sp.gov.br/sigam3/Repositorio/472/Documentos/IncendiosFlorestais01Jan31Jul2024.pdf
-7. SEMIL/SP — CFB. *Balanço Operação SP Sem Fogo 2023*. https://smastr16.blob.core.windows.net/2001/2023/12/Operacao-SP-Sem-Fogo-2023_Balanco_2023_Site.pdf
-8. G1/SETOR3. *Recorde de focos em SP (2024)*. https://g1.globo.com/sp/sao-paulo/noticia/2024/09/30/agosto-e-setembro-de-2024-sao-meses-com-mais-registros-de-focos-de-incendio-em-sp-desde-1998.ghtml
-9. ISA — Instituto Socioambiental. *Dinâmica do fogo na Mata Atlântica 1985-2023 e o caso de 2024*. https://www.socioambiental.org
-10. IPAM; ISA; SOS MA. *Análise citando Monitor do Fogo/MapBiomas*. https://mapbiomas.org
-11. MAPBIOMAS FIRES. *Fact Sheet Coleção 3*. https://mapbiomas.org/produtos
-12. OECO. *Focos de queimadas na Mata Atlântica superam em 13% índices do ano passado*. https://oeco.org.br
-13. FOLHA DE S.PAULO. *Recorde de focos em SP (2010/2024)* — dados INPE/BDQueimadas.
-14. Dissertação UFV (BDQueimadas) — série 2016 da Mata Atlântica.
+1. INPE — Programa Queimadas. *TerraBrasilis — Focos de Queimada por Bioma (Mata Atlântica)*. https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/
+2. INPE — Programa Queimadas. *BDQueimadas — Dados Abertos*. https://data.inpe.br/queimadas/dados-abertos/
+3. SOS MATA ATLÂNTICA. *Mata Atlântica — Causas*. https://www.sosma.org.br/causas/mata-atlantica
+4. SOS MATA ATLÂNTICA; INPE; et al. *Atlas da Mata Atlântica 2024-2025*. http://mtc-m21d.sid.inpe.br/col/sid.inpe.br/mtc-m21d/2026/05.19.14.25/doc/Atlas_Mata_Atlantica_2024-2025.pdf
 
 ### Referências técnicas
 1. CHART.JS. *Documentação oficial v4*. https://www.chartjs.org/docs/latest/
@@ -235,9 +222,9 @@ Atualizações: `git add .` → `git commit` → `git push` (deploy automático)
 
 ## 14. Limitações e melhorias futuras
 
-**Limitações:** série anual completa do bioma com lacunas em data.js; dados estaduais de SP incluem todos os biomas; sem granularidade municipal validada; contador mostra apenas total agregado (sem dados pessoais).
+**Limitações:** série do TerraBrasilis disponível na base do painel a partir de 2018; dados por estado incluem todo o território do bioma; setembro/2026 parcial; contador mostra apenas total agregado (sem dados pessoais).
 
-**Melhorias futuras:** rodar process_data.py para completar a série histórica; mapa interativo do Vale do Paraíba; automatizar atualização com GitHub Actions; rastrear origem do QR Code; relatório de acessos anônimo se desejado.
+**Melhorias futuras:** automatizar a atualização dos dados do TerraBrasilis (via download do GeoJSON do painel); mapa interativo do Vale do Paraíba; relatório de acessos anônimo se desejado.
 
 ---
 

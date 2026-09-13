@@ -1,20 +1,20 @@
 /* ==========================================================================
    Mata Atlântica em Alerta — JavaScript Principal
    Gráficos, interações e funcionalidades
+   Fonte de dados dos gráficos: TerraBrasilis / INPE
    ========================================================================== */
 
 (function () {
   "use strict";
 
-  /* ---------- Google Forms placeholder ---------- */
+  /* ---------- Google Forms (pesquisa) ---------- */
   var GOOGLE_FORMS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdZTCjDHHZe6QuzB6OsygMpYzsfBPFZ-gQeCYMoouUuKqiG5Q/viewform?usp=sharing&ouid=115903134200025727500";
 
-  /* ---------- Counter API ---------- */
+  /* ---------- Contador de participações ---------- */
   var COUNTER_API = "https://script.google.com/macros/s/AKfycbzAYitvMzctgxXXgfMbyGWJb3ZhQTx4DVrVhuru246rD3j4DXF7nZ8wYKFagNZFwd7wWQ/exec";
 
-  /* ---------- Fontes dos gráficos ---------- */
-  var URL_INFOQUEIMA = "https://dataserver-coids.inpe.br/queimadas/queimadas/Infoqueima/2026/2026_06_infoqueima.pdf";
-  var URL_BDQUEIMADAS = "https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/";
+  /* ---------- Fonte oficial dos gráficos (TerraBrasilis) ---------- */
+  var URL_TERRABRASILIS = "https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/";
 
   /* ---------- Wait for DOM ---------- */
   document.addEventListener("DOMContentLoaded", init);
@@ -23,14 +23,11 @@
     renderHeroStats();
     renderMonitoramentoSource();
     renderDados();
-    renderComparativo();
-    renderRegiao();
     renderPrevencao();
     renderParticipar();
     setupImpacto();
     setupMobileNav();
     setupActiveNav();
-    initSiglaTooltips();
     setupVideoFacade();
   }
 
@@ -40,10 +37,12 @@
 
   function renderHeroStats() {
     var d = FIRE_DATA;
-    setSafe("hero-ma-remaining", d.mataAtlantica.areaRestante + "%");
-    setSafe("hero-people", d.mataAtlantica.populacaoPercentual + "%");
-    setSafe("hero-2024-area", formatNumber(d.finding2024.areaQueimada));
-    setSafe("hero-source", "Fonte: " + d.finding2024.source);
+    setSafe("hero-ma-remaining", formatNumber(d.mataAtlantica.florestasMaduras) + "%");
+    setSafe("hero-2024", formatNumber(d.peak2024));
+    setSafe("hero-2026", formatNumber(d.ytd2026.count));
+    setSafe("hero-source",
+      "Fonte dos gráficos: TerraBrasilis / Programa Queimadas — INPE · atualizado em " + d.metadata.lastUpdate +
+      " · % de remanescente: Atlas da Mata Atlântica 2024-2025 (INPE/SOS MA)");
   }
 
   /* ==========================================================================
@@ -60,35 +59,31 @@
 
   function renderDados() {
     var d = FIRE_DATA;
-    setSafe("dados-intro", "Dados do satélite de referência AQUA Tarde (MODIS) — " +
-      d.metadata.scopeNote + ". Última atualização: " + d.metadata.lastUpdate + ".");
+    setSafe("dados-intro",
+      "Estes números vêm do TerraBrasilis (INPE), o portal que reúne as informações de queimadas observadas pelos satélites do Brasil. " +
+      "Última atualização: " + d.metadata.lastUpdate + ". " + d.periodNote);
 
-    var jd = d.juneData2026;
-    setSafe("stat-june-ma", formatNumber(jd.fires2026));
-    setSafe("stat-june-ma-detail", "Média histórica (jun): " + formatNumber(jd.historicalAverage) +
-      " → " + jd.interpretation + " (" + formatPercent(jd.diffPercent) + ")");
+    setSafe("stat-2024", formatNumber(d.peak2024));
+    setSafe("stat-2024-detail", "Maior total da série 2018-2026");
 
-    var spj = d.saoPaulo.june2026;
-    setSafe("stat-june-sp", formatNumber(spj.fires2026));
-    setSafe("stat-june-sp-detail", "Média histórica (jun): " + formatNumber(spj.historicalAverage) +
-      " → " + spj.interpretation + " (" + formatPercent(spj.diffPercent) + ")");
+    setSafe("stat-2026", formatNumber(d.ytd2026.count));
+    setSafe("stat-2026-detail", d.ytd2026.months + " · " + d.ytd2026.note);
 
-    setSafe("stat-2024-area", formatNumber(d.finding2024.areaQueimada) + " ha");
-    setSafe("stat-2024-detail", d.finding2024.period + " — +" + d.finding2024.increaseVs2023 + "% vs 2023 (" +
-      d.finding2024.note + ")");
+    setSafe("stat-sp2024", formatNumber(d.sp2024));
+    setSafe("stat-sp2024-detail", "Maior número do estado em toda a série");
 
-    renderHistoricalChart();
-    renderAtlasChart();
+    renderAnnualChart();
+    renderMonthlyChart();
+    renderUfChart();
   }
 
-  /* ---------- Historical Chart ---------- */
+  /* ---------- Série histórica anual ---------- */
 
-  function renderHistoricalChart() {
-    var h = FIRE_DATA.historical;
-    var labels = h.map(function (item) { return item.year; });
-    var values = h.map(function (item) { return item.count; });
-    var bgColors = h.map(function (item) {
-      if (item.count === null) return "rgba(148,163,184,0.25)";
+  function renderAnnualChart() {
+    var a = FIRE_DATA.annual;
+    var labels = a.map(function (item) { return String(item.year); });
+    var values = a.map(function (item) { return item.count; });
+    var bgColors = a.map(function (item) {
       if (item.partial) return "rgba(245,158,11,0.7)";
       if (item.count >= 20000) return "rgba(220,38,38,0.7)";
       if (item.count >= 15000) return "rgba(245,158,11,0.7)";
@@ -98,7 +93,7 @@
     var ctx = document.getElementById("chart-historical");
     if (!ctx) return;
 
-    setupSourceLink("chart-historical", FIRE_DATA.metadata.sourceUrl);
+    setupSourceLink("chart-historical", URL_TERRABRASILIS);
 
     new Chart(ctx, {
       type: "bar",
@@ -109,7 +104,7 @@
           label: "Focos de Queimada (Mata Atlântica)",
           data: values,
           backgroundColor: bgColors,
-          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1").replace("0.25", "0.5"); }),
+          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1"); }),
           borderWidth: 1,
           borderRadius: 4
         }]
@@ -122,12 +117,12 @@
           tooltip: {
             enabled: false,
             external: makeTooltipHandler(function (i) {
-              var item = h[i];
+              var item = a[i];
               return {
-                title: String(item.year) + (item.partial ? " (ano parcial)" : ""),
-                body: (item.count === null || item.count === undefined) ? "Sem dados verificados" : formatNumber(item.count) + " focos",
+                title: String(item.year) + (item.partial ? " (ano em curso)" : ""),
+                body: formatNumber(item.count) + " focos",
                 note: item.note,
-                url: item.sourceUrl,
+                url: URL_TERRABRASILIS,
                 linkText: "Acessar fonte"
               };
             })
@@ -149,95 +144,18 @@
     });
   }
 
-  /* ---------- Atlas Chart ---------- */
-
-  function renderAtlasChart() {
-    var a = FIRE_DATA.atlasDeforestation;
-    var labels = a.map(function (item) { return item.period; });
-    var values = a.map(function (item) { return item.hectares; });
-    var bgColors = a.map(function (item) {
-      if (item.hectares <= 10000) return "rgba(16,185,129,0.7)";
-      if (item.hectares <= 15000) return "rgba(245,158,11,0.7)";
-      return "rgba(220,38,38,0.7)";
-    });
-
-    var ctx = document.getElementById("chart-atlas");
-    if (!ctx) return;
-
-    setupSourceLink("chart-atlas", FIRE_DATA.atlasSourceUrl);
-
-    new Chart(ctx, {
-      type: "bar",
-      plugins: [makeValueLabelsPlugin({ position: "top" })],
-      data: {
-        labels: labels,
-        datasets: [{
-          label: "Área Desmatada (hectares)",
-          data: values,
-          backgroundColor: bgColors,
-          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1"); }),
-          borderWidth: 1,
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            enabled: false,
-            external: makeTooltipHandler(function (i) {
-              var item = a[i];
-              return {
-                title: "Período " + item.period,
-                body: formatNumber(item.hectares) + " hectares desmatados",
-                note: item.note,
-                url: FIRE_DATA.atlasSourceUrl,
-                linkText: "Ver Atlas da Mata Atlântica"
-              };
-            })
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grace: "10%",
-            title: { display: true, text: "Hectares", font: { size: 12 } },
-            grid: { color: "rgba(0,0,0,0.05)" }
-          },
-          x: {
-            grid: { display: false }
-          }
-        }
-      }
-    });
-  }
-
-  /* ==========================================================================
-     4. Comparativo
-     ========================================================================== */
-
-  function renderComparativo() {
-    var d = FIRE_DATA;
-    setSafe("comp-intro", d.metadata.scopeNote + ". Dados do satélite de referência AQUA Tarde (MODIS).");
-
-    renderMonthlyChart();
-    renderBiomaChart();
-  }
-
-  /* ---------- Monthly Chart ---------- */
+  /* ---------- Mensal: 2026 vs média 2019-2025 ---------- */
 
   function renderMonthlyChart() {
-    var mc = FIRE_DATA.monthlyComparison;
-    var labels = mc.data.map(function (item) { return item.month; });
-    var avgValues = mc.data.map(function (item) { return item.avg; });
-    var y2026Values = mc.data.map(function (item) { return item.y2026; });
+    var mc = FIRE_DATA.monthly2026;
+    var labels = mc.map(function (item) { return item.month; });
+    var avgValues = mc.map(function (item) { return item.avg; });
+    var y2026Values = mc.map(function (item) { return item.value; });
 
     var ctx = document.getElementById("chart-monthly");
     if (!ctx) return;
 
-    setupSourceLink("chart-monthly", FIRE_DATA.monthlyComparison.sourceUrl);
+    setupSourceLink("chart-monthly", URL_TERRABRASILIS);
 
     new Chart(ctx, {
       type: "bar",
@@ -246,7 +164,7 @@
         labels: labels,
         datasets: [
           {
-            label: "Média Histórica (2010-2024)",
+            label: FIRE_DATA.avgPeriod,
             data: avgValues,
             backgroundColor: "rgba(148,163,184,0.5)",
             borderColor: "rgba(148,163,184,0.8)",
@@ -257,12 +175,14 @@
             label: "2026",
             data: y2026Values,
             backgroundColor: function (ctx) {
-              var v = mc.data[ctx.dataIndex].diff2026;
-              return v < 0 ? "rgba(16,185,129,0.7)" : "rgba(220,38,38,0.7)";
+              var item = mc[ctx.dataIndex];
+              if (item.partial) return "rgba(245,158,11,0.7)";
+              return item.value <= item.avg ? "rgba(16,185,129,0.7)" : "rgba(220,38,38,0.7)";
             },
             borderColor: function (ctx) {
-              var v = mc.data[ctx.dataIndex].diff2026;
-              return v < 0 ? "rgba(16,185,129,1)" : "rgba(220,38,38,1)";
+              var item = mc[ctx.dataIndex];
+              if (item.partial) return "rgba(245,158,11,1)";
+              return item.value <= item.avg ? "rgba(16,185,129,1)" : "rgba(220,38,38,1)";
             },
             borderWidth: 1,
             borderRadius: 4
@@ -277,166 +197,12 @@
           tooltip: {
             enabled: false,
             external: makeTooltipHandler(function (i) {
-              var item = mc.data[i];
+              var item = mc[i];
               return {
-                title: item.month + " — Brasil (todos os biomas)",
-                body: "2026: " + formatNumber(item.y2026) + " focos | Média: " + formatNumber(item.avg) + " focos",
-                note: "Diferença: " + formatPercent(item.diff2026),
-                url: FIRE_DATA.monthlyComparison.sourceUrl,
-                linkText: "Ver Boletim InfoQueima"
-              };
-            })
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grace: "10%",
-            title: { display: true, text: "Número de Focos", font: { size: 12 } },
-            grid: { color: "rgba(0,0,0,0.05)" }
-          },
-          x: {
-            grid: { display: false }
-          }
-        }
-      }
-    });
-  }
-
-  /* ---------- Bioma Chart ---------- */
-
-  function renderBiomaChart() {
-    var bc = FIRE_DATA.biomaComparison;
-    var labels = bc.map(function (item) { return item.name; });
-    var avgValues = bc.map(function (item) { return item.avg; });
-    var y2026Values = bc.map(function (item) { return item.fires2026; });
-
-    var ctx = document.getElementById("chart-bioma");
-    if (!ctx) return;
-
-    setupSourceLink("chart-bioma", URL_INFOQUEIMA);
-
-    new Chart(ctx, {
-      type: "bar",
-      plugins: [makeValueLabelsPlugin({ position: "right" })],
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Média Histórica (jun/2010-2024)",
-            data: avgValues,
-            backgroundColor: "rgba(148,163,184,0.5)",
-            borderColor: "rgba(148,163,184,0.8)",
-            borderWidth: 1,
-            borderRadius: 4
-          },
-          {
-            label: "Junho/2026",
-            data: y2026Values,
-            backgroundColor: "rgba(220,38,38,0.7)",
-            borderColor: "rgba(220,38,38,1)",
-            borderWidth: 1,
-            borderRadius: 4
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        indexAxis: "y",
-        plugins: {
-          legend: { position: "bottom" },
-          tooltip: {
-            enabled: false,
-            external: makeTooltipHandler(function (i) {
-              var item = bc[i];
-              var diff = item.fires2026 - item.avg;
-              var pct = ((diff / item.avg) * 100).toFixed(1);
-              return {
-                title: item.name,
-                body: "Jun/2026: " + formatNumber(item.fires2026) + " focos | Média: " + formatNumber(item.avg) + " focos",
-                note: "Diferença vs média: " + (diff >= 0 ? "+" : "") + pct.replace(".", ",") + "%",
-                url: URL_INFOQUEIMA,
-                linkText: "Ver Boletim InfoQueima"
-              };
-            })
-          }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            grace: "10%",
-            title: { display: true, text: "Número de Focos", font: { size: 12 } },
-            grid: { color: "rgba(0,0,0,0.05)" }
-          },
-          y: {
-            grid: { display: false }
-          }
-        }
-      }
-    });
-  }
-
-  /* ==========================================================================
-     5. Região (São Paulo)
-     ========================================================================== */
-
-  function renderRegiao() {
-    var sp = FIRE_DATA.saoPaulo;
-    setSafe("sp-why", "São Paulo tem recorde histórico de queimadas em 2024. " +
-      "Jan-Set 2024: " + formatNumber(sp.records[sp.records.length - 1].count) +
-      " focos — superando o recorde anterior de " + formatNumber(sp.records[0].count) +
-      " em 2010. Principais causas: áreas agrícolas (cana-de-açúcar e pastagens) e período de seca prolongado.");
-
-    renderSPChart();
-    renderSPJuneChart();
-  }
-
-  /* ---------- SP Chart ---------- */
-
-  function renderSPChart() {
-    var sp = FIRE_DATA.saoPaulo;
-    var labels = sp.records.map(function (item) { return item.year; });
-    var values = sp.records.map(function (item) { return item.count; });
-    var bgColors = sp.records.map(function (item) {
-      if (item.count >= 7000) return "rgba(220,38,38,0.7)";
-      if (item.count >= 5000) return "rgba(245,158,11,0.7)";
-      return "rgba(16,185,129,0.7)";
-    });
-
-    var ctx = document.getElementById("chart-saopaulo");
-    if (!ctx) return;
-
-    setupSourceLink("chart-saopaulo", URL_BDQUEIMADAS);
-
-    new Chart(ctx, {
-      type: "bar",
-      plugins: [makeValueLabelsPlugin({ position: "top" })],
-      data: {
-        labels: labels,
-        datasets: [{
-          label: "Focos de Queimada (SP — todos os biomas)",
-          data: values,
-          backgroundColor: bgColors,
-          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1"); }),
-          borderWidth: 1,
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            enabled: false,
-            external: makeTooltipHandler(function (i) {
-              var item = sp.records[i];
-              return {
-                title: item.year + " — São Paulo",
-                body: formatNumber(item.count) + " focos",
-                note: item.source + (item.note ? " — " + item.note : ""),
-                url: item.sourceUrl,
+                title: item.month + " — Mata Atlântica" + (item.partial ? " (mês em curso)" : ""),
+                body: "2026: " + formatNumber(item.value) + " focos | Média: " + formatNumber(item.avg) + " focos",
+                note: "Diferença vs média: " + formatPercent(percentDiff(item.value, item.avg)),
+                url: URL_TERRABRASILIS,
                 linkText: "Acessar fonte"
               };
             })
@@ -457,32 +223,31 @@
     });
   }
 
-  /* ---------- SP June Chart ---------- */
+  /* ---------- Focos por estado ---------- */
 
-  function renderSPJuneChart() {
-    var spj = FIRE_DATA.saoPaulo.june2026;
+  function renderUfChart() {
+    var uf = FIRE_DATA.ufTotal;
+    var labels = uf.map(function (item) { return item.uf; });
+    var values = uf.map(function (item) { return item.count; });
+    var bgColors = uf.map(function (item) {
+      return item.highlight ? "rgba(220,38,38,0.8)" : "rgba(16,185,129,0.7)";
+    });
 
-    var ctx = document.getElementById("chart-sp-june");
+    var ctx = document.getElementById("chart-uf");
     if (!ctx) return;
 
-    setupSourceLink("chart-sp-june", FIRE_DATA.saoPaulo.june2026.sourceUrl);
+    setupSourceLink("chart-uf", URL_TERRABRASILIS);
 
     new Chart(ctx, {
       type: "bar",
-      plugins: [makeValueLabelsPlugin({ position: "top" })],
+      plugins: [makeValueLabelsPlugin({ position: "right" })],
       data: {
-        labels: ["Média histórica (jun/2010-2024)", "Junho/2026"],
+        labels: labels,
         datasets: [{
-          label: "Focos em São Paulo",
-          data: [spj.historicalAverage, spj.fires2026],
-          backgroundColor: [
-            "rgba(148,163,184,0.6)",
-            "rgba(220,38,38,0.7)"
-          ],
-          borderColor: [
-            "rgba(148,163,184,1)",
-            "rgba(220,38,38,1)"
-          ],
+          label: "Focos (2018-2026)",
+          data: values,
+          backgroundColor: bgColors,
+          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1").replace("0.8", "1"); }),
           borderWidth: 1,
           borderRadius: 4
         }]
@@ -490,31 +255,31 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        indexAxis: "y",
         plugins: {
           legend: { display: false },
           tooltip: {
             enabled: false,
             external: makeTooltipHandler(function (i) {
+              var item = uf[i];
               return {
-                title: "São Paulo — Junho/2026",
-                body: i === 0
-                  ? "Média (jun/2010-2024): " + formatNumber(spj.historicalAverage) + " focos"
-                  : "Jun/2026: " + formatNumber(spj.fires2026) + " focos",
-                note: "Diferença: " + formatPercent(spj.diffPercent) + " vs média",
-                url: spj.sourceUrl,
-                linkText: "Ver Boletim InfoQueima"
+                title: item.uf + " — Mata Atlântica",
+                body: formatNumber(item.count) + " focos (2018-2026)",
+                note: item.uf === "São Paulo" ? FIRE_DATA.spNote : null,
+                url: URL_TERRABRASILIS,
+                linkText: "Acessar fonte"
               };
             })
           }
         },
         scales: {
-          y: {
+          x: {
             beginAtZero: true,
             grace: "10%",
             title: { display: true, text: "Número de Focos", font: { size: 12 } },
             grid: { color: "rgba(0,0,0,0.05)" }
           },
-          x: {
+          y: {
             grid: { display: false }
           }
         }
@@ -523,15 +288,15 @@
   }
 
   /* ==========================================================================
-     6. Prevenção
+     4. Prevenção
      ========================================================================== */
 
   function renderPrevencao() {
-    /* Content is static in HTML; no dynamic rendering needed */
+    /* Conteúdo estático no HTML */
   }
 
   /* ==========================================================================
-     7. Participar (QR Code + Form Link)
+     5. Participar (QR Code + Form Link)
      ========================================================================== */
 
   function renderParticipar() {
@@ -553,7 +318,7 @@
   }
 
   /* ==========================================================================
-     8. Impacto (Counters)
+     6. Impacto (contador)
      ========================================================================== */
 
   function setupImpacto() {
@@ -620,7 +385,7 @@
   }
 
   /* ==========================================================================
-     9. Mobile Navigation
+     7. Mobile Navigation
      ========================================================================== */
 
   function setupMobileNav() {
@@ -666,7 +431,7 @@
   }
 
   /* ==========================================================================
-     10. Active Nav Highlight
+     8. Active Nav Highlight
      ========================================================================== */
 
   function setupActiveNav() {
@@ -692,7 +457,7 @@
   }
 
   /* ==========================================================================
-     11. Fonte oficial: gráfico clicável + hint com URL + teclado
+     9. Fonte oficial: gráfico clicável + hint com URL + teclado
      ========================================================================== */
 
   function setupSourceLink(canvasId, url) {
@@ -732,7 +497,7 @@
   }
 
   /* ==========================================================================
-     12. Tooltip personalizado com link da fonte
+     10. Tooltip personalizado com link da fonte
      ========================================================================== */
 
   function getOrCreateTooltip(chart) {
@@ -789,7 +554,7 @@
   }
 
   /* ==========================================================================
-     13. Rótulos de valores exatos nas barras
+     11. Rótulos de valores exatos nas barras
      ========================================================================== */
 
   function makeValueLabelsPlugin(opts) {
@@ -857,104 +622,13 @@
     return prefix + pct.toFixed(1).replace(".", ",") + "%";
   }
 
-  /* ==========================================================================
-     15. Tooltip de siglas (acessível)
-     ========================================================================== */
-
-  function initSiglaTooltips() {
-    var tooltip = document.createElement("div");
-    tooltip.id = "sigla-tooltip";
-    tooltip.className = "sigla-tooltip";
-    tooltip.setAttribute("role", "tooltip");
-    tooltip.setAttribute("aria-hidden", "true");
-    document.body.appendChild(tooltip);
-
-    var shown = null;
-
-    function positionTooltip(el) {
-      var rect = el.getBoundingClientRect();
-      var pad = 8;
-      var top = rect.bottom + pad;
-      var left = rect.left + rect.width / 2;
-      var box = tooltip.getBoundingClientRect();
-      if (left + box.width / 2 > window.innerWidth - pad) {
-        left = window.innerWidth - pad - box.width / 2;
-      }
-      left = Math.max(pad, left);
-      tooltip.style.left = Math.round(left - box.width / 2) + "px";
-      tooltip.style.top = Math.round(top) + "px";
-    }
-
-    function show(el) {
-      var def = el.getAttribute("data-def");
-      if (!def) return;
-      tooltip.textContent = def;
-      shown = el;
-      tooltip.style.visibility = "visible";
-      tooltip.style.opacity = "1";
-      tooltip.setAttribute("aria-hidden", "false");
-      positionTooltip(el);
-    }
-
-    function hide() {
-      shown = null;
-      tooltip.style.visibility = "hidden";
-      tooltip.style.opacity = "0";
-      tooltip.setAttribute("aria-hidden", "true");
-    }
-
-    var siglas = document.querySelectorAll(".sigla[data-def]");
-
-    for (var i = 0; i < siglas.length; i++) {
-      (function (el) {
-        el.addEventListener("mouseenter", function () {
-          show(el);
-        });
-        el.addEventListener("mouseleave", function () {
-          hide();
-        });
-        el.addEventListener("focus", function () {
-          show(el);
-        });
-        el.addEventListener("blur", function () {
-          hide();
-        });
-        el.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (shown === el) {
-            hide();
-          } else {
-            show(el);
-          }
-        });
-        el.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            if (shown === el) {
-              hide();
-            } else {
-              show(el);
-            }
-          } else if (e.key === "Escape") {
-            hide();
-            el.focus();
-          }
-        });
-      })(siglas[i]);
-    }
-
-    document.addEventListener("pointerdown", function (e) {
-      if (shown && !shown.contains(e.target)) {
-        hide();
-      }
-    });
-    document.addEventListener("scroll", hide, true);
-    window.addEventListener("resize", hide);
-    window.addEventListener("blur", hide);
+  function percentDiff(value, base) {
+    if (!base) return 0;
+    return ((value - base) / base) * 100;
   }
 
   /* ==========================================================================
-     25. Vídeo complementar (YouTube) — click-to-load
+     12. Vídeo complementar (YouTube) — click-to-load
      ========================================================================== */
 
   function setupVideoFacade() {
