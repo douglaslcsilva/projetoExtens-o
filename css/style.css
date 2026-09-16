@@ -456,6 +456,46 @@ h1, h2, h3, h4 {
   font-style: italic;
 }
 
+.card-details {
+  margin-top: var(--space-3);
+}
+
+.card-details summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--c-green-700);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-sm);
+}
+
+.card-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.card-details[open] summary .card-arrow {
+  transform: rotate(180deg);
+}
+
+.card-arrow {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  color: var(--c-slate-500);
+  transition: transform var(--transition-fast);
+}
+
+.details-body {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--c-slate-200);
+}
+
+.details-body p {
+  margin-bottom: 0;
+}
+
 /* ---------- Steps ---------- */
 .steps {
   display: grid;
