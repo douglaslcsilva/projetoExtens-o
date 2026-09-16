@@ -19,7 +19,7 @@ Este documento registra as fontes de dados utilizadas no portal web educacional 
 | **Painel** | Queimadas × Desmatamento — Focos por Bioma (agregado) |
 | **URL** | https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/ |
 | **Fonte de dados (JSON)** | https://terrabrasilis.dpi.inpe.br/file-delivery/download/dashboard-fires/fof_prodes |
-| **Data de extração** | 09/09/2026 |
+| **Data de extração** | 16/09/2026 (dados do painel atualizados até 13/09/2026) |
 | **Satélite de referência** | AQUA Tarde (sensor MODIS, pixel ~1 km) |
 | **Filtro utilizado** | Bioma: Mata Atlântica |
 | **Período** | Janeiro de 2018 a setembro de 2026 |
@@ -36,7 +36,7 @@ Este documento registra as fontes de dados utilizadas no portal web educacional 
 | 2023 | 11.630 | Ano completo |
 | 2024 | 23.115 | Maior total da série |
 | 2025 | 12.367 | Ano completo |
-| 2026 | 5.027 | Parcial — janeiro a setembro |
+| 2026 | 5.119 | Parcial — janeiro a setembro |
 
 ### Mensal 2026 vs média 2019-2025 (jan–set)
 
@@ -50,9 +50,9 @@ Este documento registra as fontes de dados utilizadas no portal web educacional 
 | Junho | 425 | 768 |
 | Julho | 868 | 1.716 |
 | Agosto | 1.273 | 4.157 |
-| Setembro* | 278 | 4.038 |
+| Setembro* | 370 | 4.038 |
 
-\* Setembro/2026 em curso (dados até 09/09/2026).
+\* Setembro/2026 em curso (dados até 13/09/2026).
 
 ### Focos por estado (2018-2026)
 
@@ -119,4 +119,4 @@ Conforme documentação oficial do Programa Queimadas/INPE:
 
 ---
 
-*Documento atualizado em: 09/09/2026*
+*Documento atualizado em: 16/09/2026*

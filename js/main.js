@@ -83,17 +83,31 @@
     var a = FIRE_DATA.annual;
     var labels = a.map(function (item) { return String(item.year); });
     var values = a.map(function (item) { return item.count; });
-    var bgColors = a.map(function (item) {
-      if (item.partial) return "rgba(245,158,11,0.7)";
+    var barBg = function (ctx) {
+      var item = a[ctx.dataIndex];
+      if (item.partial) return makeHatchPattern(ctx.chart.ctx, "rgba(245,158,11,0.75)");
       if (item.count >= 20000) return "rgba(220,38,38,0.7)";
       if (item.count >= 15000) return "rgba(245,158,11,0.7)";
       return "rgba(16,185,129,0.7)";
-    });
+    };
+    var barBorder = function (ctx) {
+      var item = a[ctx.dataIndex];
+      if (item.partial) return "rgba(245,158,11,1)";
+      if (item.count >= 20000) return "rgba(220,38,38,1)";
+      if (item.count >= 15000) return "rgba(245,158,11,1)";
+      return "rgba(16,185,129,1)";
+    };
 
     var ctx = document.getElementById("chart-historical");
     if (!ctx) return;
 
     setupSourceLink("chart-historical", URL_TERRABRASILIS);
+    renderChartLegend("legend-annual", [
+      { style: "background:#10b981", label: "menos de 15 mil" },
+      { style: "background:#f59e0b", label: "de 15 mil a 19.999" },
+      { style: "background:#dc2626", label: "20 mil ou mais" },
+      { style: "background-image:repeating-linear-gradient(45deg, rgba(245,158,11,0.9) 0 4px, #fff7ed 4px 8px)", label: "ano em curso (parcial)" }
+    ]);
 
     new Chart(ctx, {
       type: "bar",
@@ -103,8 +117,8 @@
         datasets: [{
           label: "Focos de Queimada (Mata Atlântica)",
           data: values,
-          backgroundColor: bgColors,
-          borderColor: bgColors.map(function (c) { return c.replace("0.7", "1"); }),
+          backgroundColor: barBg,
+          borderColor: barBorder,
           borderWidth: 1,
           borderRadius: 4
         }]
@@ -156,6 +170,12 @@
     if (!ctx) return;
 
     setupSourceLink("chart-monthly", URL_TERRABRASILIS);
+    renderChartLegend("legend-monthly", [
+      { style: "background:rgba(148,163,184,0.6)", label: "média 2019-2025" },
+      { style: "background:#10b981", label: "2026 abaixo da média" },
+      { style: "background:#dc2626", label: "2026 acima da média" },
+      { style: "background-image:repeating-linear-gradient(45deg, rgba(245,158,11,0.9) 0 4px, #fff7ed 4px 8px)", label: "mês em curso" }
+    ]);
 
     new Chart(ctx, {
       type: "bar",
@@ -176,7 +196,7 @@
             data: y2026Values,
             backgroundColor: function (ctx) {
               var item = mc[ctx.dataIndex];
-              if (item.partial) return "rgba(245,158,11,0.7)";
+              if (item.partial) return makeHatchPattern(ctx.chart.ctx, "rgba(245,158,11,0.75)");
               return item.value <= item.avg ? "rgba(16,185,129,0.7)" : "rgba(220,38,38,0.7)";
             },
             borderColor: function (ctx) {
@@ -193,7 +213,7 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: "bottom" },
+          legend: { display: false },
           tooltip: {
             enabled: false,
             external: makeTooltipHandler(function (i) {
@@ -237,6 +257,10 @@
     if (!ctx) return;
 
     setupSourceLink("chart-uf", URL_TERRABRASILIS);
+    renderChartLegend("legend-uf", [
+      { style: "background:#10b981", label: "demais estados" },
+      { style: "background:#dc2626", label: "São Paulo (destaque)" }
+    ]);
 
     new Chart(ctx, {
       type: "bar",
@@ -622,6 +646,39 @@
   function setSafe(id, text) {
     var el = document.getElementById(id);
     if (el) el.textContent = text;
+  }
+
+  function renderChartLegend(containerId, items) {
+    var el = document.getElementById(containerId);
+    if (!el || !items || !items.length) return;
+
+    var html = "";
+    items.forEach(function (item) {
+      html += "<span class='legend-item'>" +
+        "<span class='legend-chip' style='" + item.style + "'></span>" +
+        "<span class='legend-label'>" + item.label + "</span>" +
+        "</span>";
+    });
+    el.innerHTML = html;
+  }
+
+  function makeHatchPattern(chartCtx, color) {
+    var size = 12;
+    var patternCanvas = document.createElement("canvas");
+    patternCanvas.width = size;
+    patternCanvas.height = size;
+
+    var pctx = patternCanvas.getContext("2d");
+    pctx.strokeStyle = color;
+    pctx.lineWidth = 3;
+    pctx.beginPath();
+    pctx.moveTo(-size, size / 2);
+    pctx.lineTo(size / 2, -size);
+    pctx.moveTo(-size / 2, size);
+    pctx.lineTo(size, -size / 2);
+    pctx.stroke();
+
+    return chartCtx.createPattern(patternCanvas, "repeat");
   }
 
   function formatNumber(n) {

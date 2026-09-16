@@ -3,12 +3,12 @@ const FIRE_DATA = {
     scope: "Bioma Mata Atlântica — Brasil",
     scopeNote: "Recorte: bioma Mata Atlântica nos 17 estados da Lei da Mata Atlântica (Lei 11.428/2006)",
     satellite: "Os satélites do INPE observam o Brasil do espaço e detectam os focos de calor.",
-    lastUpdate: "09/09/2026",
+    lastUpdate: "16/09/2026",
     period: "Janeiro de 2018 a setembro de 2026",
     source: "TerraBrasilis / Programa Queimadas — Instituto Nacional de Pesquisas Espaciais (INPE)",
     sourceUrl: "https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/",
     dataSourceUrl: "https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/",
-    consultationDate: "09/09/2026",
+    consultationDate: "16/09/2026",
     methodologyNote: "Para gerar esses dados, os satélites do INPE detectam os focos de calor e um programa de computador organiza as informações. Depois, o portal TerraBrasilis apresenta tudo de forma clara. Um 'foco de queimada' é uma marca de calor vista do espaço — ele NÃO representa um incêndio inteiro nem a área exata queimada."
   },
   mataAtlantica: {
@@ -33,13 +33,13 @@ const FIRE_DATA = {
     { year: 2023, count: 11630 },
     { year: 2024, count: 23115, note: "Maior total da série TerraBrasilis 2018-2026" },
     { year: 2025, count: 12367 },
-    { year: 2026, count: 5027, partial: true, note: "Ano em curso — dados de janeiro a setembro de 2026" }
+    { year: 2026, count: 5119, partial: true, note: "Ano em curso — dados de janeiro a setembro de 2026" }
   ],
   peak2024: 23115,
   ytd2026: {
-    count: 5027,
+    count: 5119,
     months: "janeiro a setembro de 2026 (parcial)",
-    note: "Setembro/2026 ainda está em curso (dados até 09/09/2026)."
+    note: "Setembro/2026 ainda está em curso (dados até 13/09/2026)."
   },
   monthly2026: [
     { month: "Janeiro", value: 536, avg: 409 },
@@ -50,7 +50,7 @@ const FIRE_DATA = {
     { month: "Junho", value: 425, avg: 768 },
     { month: "Julho", value: 868, avg: 1716 },
     { month: "Agosto", value: 1273, avg: 4157 },
-    { month: "Setembro", value: 278, avg: 4038, partial: true }
+    { month: "Setembro", value: 370, avg: 4038, partial: true }
   ],
   avgPeriod: "Média 2019-2025 (mesmos meses)",
   ufTotal: [

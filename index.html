@@ -17,12 +17,7 @@
     <div class="header-inner container">
       <div class="logo-area">
         <span class="logo-icon" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 20v-6.5"/>
-            <path d="M12 13.5c-1.7-.9-2.7-2-3-3.5"/>
-            <path d="M12 13.5c1.7-.9 2.7-2 3-3.5"/>
-            <path d="M12 3.6c2.6 0 4.6 1.1 4.9 3.4 1.8 1.2 2.3 3.2 1.1 4.8-.3 1.5-1.7 2.7-3.4 2.9-.9 1.7-3 2.6-4.8 2.2-1.4-.3-2.4-1.1-2.9-2.4-2.2-.5-3.2-2.5-2.4-4.4-1.2-1.5-.7-3.6 1.2-4.6C8.2 4.4 10 3.6 12 3.6Z"/>
-          </svg>
+          <img src="img/logo-header.jpeg" alt="" width="74" height="74">
         </span>
         <div>
           <h1 class="site-title">Mata Atlântica em Alerta</h1>
@@ -194,7 +189,8 @@
             <canvas id="chart-historical" aria-label="Gráfico de barras mostrando focos de queimada na Mata Atlântica por ano" role="img"></canvas>
             <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a>. <span class="note-secondary">Verde = menos de 15 mil focos; âmbar = de 15 mil a 19.999; vermelho = 20 mil ou mais. Barra âmbar em 2026 indica ano em curso (dados de janeiro a setembro).</span></p>
+          <div class="chart-legend" id="legend-annual" aria-label="Legenda do gráfico anual"></div>
+          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
 
         <div class="chart-wrapper">
@@ -203,7 +199,8 @@
             <canvas id="chart-monthly" aria-label="Gráfico de barras comparando focos mensais de 2026 com a média histórica na Mata Atlântica" role="img"></canvas>
             <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a>. <span class="note-secondary">Cinza = média de 2019 a 2025 no mesmo mês; verde = 2026 abaixo da média; vermelho = 2026 acima da média; âmbar = mês em curso (setembro/2026, dados até 09/09).</span></p>
+          <div class="chart-legend" id="legend-monthly" aria-label="Legenda do gráfico mensal"></div>
+          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
 
         <div class="chart-wrapper">
@@ -212,7 +209,8 @@
             <canvas id="chart-uf" aria-label="Gráfico mostrando focos de queimada por estado na Mata Atlântica" role="img"></canvas>
             <span class="chart-hint" aria-hidden="true">Clique para consultar a fonte oficial</span>
           </div>
-          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a>. <span class="note-secondary">Total acumulado de 2018 a 2026 para os 10 estados com mais focos no bioma. A barra vermelha destaca São Paulo, estado com maior número de focos em 2024 (7.099).</span></p>
+          <div class="chart-legend" id="legend-uf" aria-label="Legenda do gráfico por estado"></div>
+          <p class="chart-note">Fonte: TerraBrasilis / Programa Queimadas — INPE — <a href="https://terrabrasilis.dpi.inpe.br/app/dashboard/fires/biomes/aggregated/" target="_blank" rel="noopener noreferrer" class="source-external">consultar fonte oficial ↗</a></p>
         </div>
       </div>
     </section>
@@ -328,7 +326,7 @@
             <div class="glos-item"><dt>QR Code</dt><dd>Quick Response Code (código de resposta rápida) — imagem que, ao ser lida pela câmera do celular, abre um link.</dd></div>
           </dl>
         </details>
-        <p class="sources-update">Dados extraídos do TerraBrasilis em: 09/09/2026 | Atualização da série: setembro de 2026</p>
+        <p class="sources-update">Dados extraídos do TerraBrasilis em: 16/09/2026 | Atualização da série: setembro de 2026</p>
       </div>
     </section>
 
