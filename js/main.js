@@ -256,6 +256,9 @@
         responsive: true,
         maintainAspectRatio: false,
         indexAxis: "y",
+        layout: {
+          padding: { right: 60 }
+        },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -582,10 +585,20 @@
             var x, y;
 
             if (horizontal) {
-              x = bar.x + bar.width + 6;
+              x = chart.scales.x.getPixelForValue(v) + 6;
               y = bar.y + bar.height / 2;
               ctx.textAlign = "left";
               ctx.textBaseline = "middle";
+
+              var textW = ctx.measureText(text).width;
+              var rightPad = 8;
+              if (chart.options.layout && chart.options.layout.padding &&
+                  typeof chart.options.layout.padding.right === "number") {
+                rightPad = chart.options.layout.padding.right;
+              }
+              var maxX = Math.min(chart.chartArea.right + rightPad, chart.canvas.width) - 2;
+              if (x < chart.chartArea.left + 2) x = chart.chartArea.left + 2;
+              if (x + textW > maxX) x = maxX - textW;
             } else {
               x = bar.x + bar.width / 2;
               y = bar.y - 6;
